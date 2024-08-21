@@ -7,11 +7,18 @@ import (
 
 func NewHandlers() *http.ServeMux {
 	mux := http.NewServeMux()
+	//mux.HandleFunc("/", Indexhandler)
 	mux.HandleFunc("/download", PrintPDF)
 	mux.HandleFunc("/resume", ReturnResume)
+	mux.HandleFunc("/updateresume", UpdateResume)
 	mux.HandleFunc("/feedback", SendingFeedback)
-	mux.HandleFunc("/index", Indexhandler)
 	mux.HandleFunc("/project", ReturnProject)
+
+	//파일서버
+	staticFileServer := http.FileServer(http.Dir("./home"))
+	mux.Handle("/", http.StripPrefix("/", staticFileServer))
+
 	fmt.Println("handlerset")
+
 	return mux
 }
