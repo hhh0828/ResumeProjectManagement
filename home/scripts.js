@@ -111,7 +111,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const experiencesPerPage = 2; // 한 번에 표시할 경험의 수
 
     // API로부터 JSON 데이터 가져오기
-    fetch('/resume')
+    fetch('/returnresume')
         .then(response => response.json())
         .then(data => {
 
