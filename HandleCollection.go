@@ -80,3 +80,39 @@ func SendingFeedback(w http.ResponseWriter, r *http.Request) {
 func ReturnProject(w http.ResponseWriter, r *http.Request) {
 	//DB conn required - Create, Read, Update
 }
+
+type Skillang struct {
+	Skillsname []string `json:"skills"`
+	Langsname  []string `json:"languages"`
+}
+
+func Returnskillang(w http.ResponseWriter, r *http.Request) {
+	var skills []Skill
+	var langauges []Languages
+
+	db := ConnectDB()
+	db.Find(&skills)
+	db.Find(&langauges)
+	//언어이름모음
+	var langsname []string
+	//스킬이름모음
+	var skillsname []string
+
+	//스킬의 이름만
+	for _, skill := range skills {
+		skillsname = append(skillsname, skill.Name)
+	}
+	//언어의 이름만
+	for _, lang := range langauges {
+		langsname = append(langsname, lang.Name)
+	}
+	//가져온 스킬과 언어를 구조체로 묶어서 Json으로 보낼거임
+
+	var skillang Skillang
+	skillang.Langsname = langsname
+	skillang.Skillsname = skillsname
+
+	data, _ := json.Marshal(skillang)
+	w.Header().Set("Content-Type", "application/json")
+	w.Write(data)
+}

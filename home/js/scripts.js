@@ -159,34 +159,6 @@ document.addEventListener("DOMContentLoaded", function () {
             // Initial display of experiences (first call)
             //displayExperience();
 
-            const skills = data.skills; // 스킬 배열 데이터 접근
-            const container = document.getElementById('skillsContainer'); // 컨테이너 요소 가져오기
-
-            const languages = data.languages; // 언어스킬 배열에 접근
-            const containerlang = document.getElementById('languagesContainer');
-
-            // 각 스킬 항목을 처리
-            skills.forEach(skill => {
-                const skillDiv = document.createElement('div');
-                skillDiv.className = 'col mb-4 mb-md-0';
-                skillDiv.innerHTML = `
-                    <div class="d-flex align-items-center bg-light rounded-4 p-3 h-100">
-                        ${skill}
-                    </div>
-                `;
-                container.appendChild(skillDiv);
-            });
-
-            languages.forEach(language => {
-                const languageDiv = document.createElement('div');
-                languageDiv.className = 'col mb-4 mb-md-0';
-                languageDiv.innerHTML = `
-                    <div class="d-flex align-items-center bg-light rounded-4 p-3 h-100">
-                        ${language}
-                    </div>
-                `;
-                containerlang.appendChild(languageDiv);
-            });
 
         })
         .catch(error => console.error('Error fetching data:', error));

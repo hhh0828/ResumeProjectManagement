@@ -14,7 +14,7 @@ func NewHandlers() *http.ServeMux {
 	mux.HandleFunc("/feedback", SendingFeedback)
 	mux.HandleFunc("/project", ReturnProject)
 	mux.HandleFunc("/resumepage", ResumePage)
-
+	mux.HandleFunc("/returnskillang", Returnskillang)
 	//파일서버
 	staticFileServer := http.FileServer(http.Dir("./home"))
 	mux.Handle("/", http.StripPrefix("/", staticFileServer))

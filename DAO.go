@@ -36,13 +36,15 @@ type Resume struct {
 }
 
 type Skill struct {
-	ID   uint
-	Name string
+	ID          uint
+	Name        string
+	Description string
 }
 
 type Languages struct {
-	ID   uint
-	Name string
+	ID          uint
+	Name        string
+	Proficiency string
 }
 
 func ConnectDB() *gorm.DB {
@@ -52,7 +54,7 @@ func ConnectDB() *gorm.DB {
 	if err != nil {
 		log.Fatal("error occrued with : ", err)
 	}
-	db.AutoMigrate(&Feedback{}, &Resume{}, &Experience{})
+	db.AutoMigrate(&Feedback{}, &Resume{}, &Experience{}, &Skill{}, &Languages{})
 
 	return db
 }
