@@ -27,8 +27,8 @@
                     <div class="collapse navbar-collapse" id="navbarSupportedContent">
                         <ul class="navbar-nav ms-auto mb-2 mb-lg-0 small fw-bolder">
                             <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
-                            <li class="nav-item"><a class="nav-link" href="resume.html">Resume</a></li>
-                            <li class="nav-item"><a class="nav-link" href="projects.html">Projects</a></li>
+                            <li class="nav-item"><a class="nav-link" href="resumepage">Resume</a></li>
+                            <li class="nav-item"><a class="nav-link" href="projectspage">Projects</a></li>
                             <li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
                         </ul>
                     </div>
@@ -42,20 +42,26 @@
                     </div>
                     <div class="row gx-5 justify-content-center">
                         <div class="col-lg-11 col-xl-9 col-xxl-8">
-                            <!-- Project Card 1-->
+
+
+                            <div id="projectContainer">
+                            <button id="loadMoreButton" class="btn btn-primary">더보기</button>
+                            
+                            <!-- Project Card 1
                             <div class="card overflow-hidden shadow rounded-4 border-0 mb-5">
                                 <div class="card-body p-0">
                                     <div class="d-flex align-items-center">
                                         <div class="p-5">
-                                            <h2 class="fw-bolder">Project Name 1</h2>
+                                            <h2 class="fw-bolder" id="pjname"> </h2>
                                             <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Eius at enim eum illum aperiam placeat esse? Mollitia omnis minima saepe recusandae libero, iste ad asperiores! Explicabo commodi quo itaque! Ipsam!</p>
                                         </div>
                                         <img class="img-fluid" src="https://dummyimage.com/300x400/343a40/6c757d" alt="..." />
                                     </div>
                                 </div>
                             </div>
-                            <!-- Project Card 2-->
-                            <div class="card overflow-hidden shadow rounded-4 border-0">
+                            
+                             Project Card 2-->
+                            <!--<div class="card overflow-hidden shadow rounded-4 border-0">
                                 <div class="card-body p-0">
                                     <div class="d-flex align-items-center">
                                         <div class="p-5">
@@ -65,11 +71,11 @@
                                         <img class="img-fluid" src="https://dummyimage.com/300x400/343a40/6c757d" alt="..." />
                                     </div>
                                 </div>
-                            </div>
+                            </div>-->
                         </div>
                     </div>
                 </div>
-            </section>
+            </section> 
             <!-- Call to action section-->
             <section class="py-5 bg-gradient-primary-to-secondary text-white">
                 <div class="container px-5 my-5">
@@ -98,6 +104,6 @@
         <!-- Bootstrap core JS-->
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
         <!-- Core theme JS-->
-        <script src="/js/scripts.js"></script>
+        <script src="/pj/pj.js"></script>
     </body>
 </html>

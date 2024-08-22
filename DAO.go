@@ -47,6 +47,15 @@ type Languages struct {
 	Proficiency string
 }
 
+type Project struct {
+	ID        uint
+	Name      string `'json:"name"`
+	ShortDesc string `json:"shortdesc"`
+	LongDesc  string `json:"longdesc"`
+	ImgUrl    string
+	DetailUrl string `json:"detailurl"`
+}
+
 func ConnectDB() *gorm.DB {
 
 	dsn := "host=localhost user=postgres password=root1234 dbname=resume1 port=8801 sslmode=disable TimeZone=Asia/Seoul"
@@ -54,7 +63,7 @@ func ConnectDB() *gorm.DB {
 	if err != nil {
 		log.Fatal("error occrued with : ", err)
 	}
-	db.AutoMigrate(&Feedback{}, &Resume{}, &Experience{}, &Skill{}, &Languages{})
+	db.AutoMigrate(&Feedback{}, &Resume{}, &Experience{}, &Skill{}, &Languages{}, &Project{})
 
 	return db
 }

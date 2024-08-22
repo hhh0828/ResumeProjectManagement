@@ -12,7 +12,8 @@ func NewHandlers() *http.ServeMux {
 	mux.HandleFunc("/returnresume", ReturnResume)
 	mux.HandleFunc("/updateresume", UpdateResume)
 	mux.HandleFunc("/feedback", SendingFeedback)
-	mux.HandleFunc("/project", ReturnProject)
+	mux.HandleFunc("/projectspage", ProjectPage)
+	mux.HandleFunc("/returnproject", ReturnProject)
 	mux.HandleFunc("/resumepage", ResumePage)
 	mux.HandleFunc("/returnskillang", Returnskillang)
 	//파일서버

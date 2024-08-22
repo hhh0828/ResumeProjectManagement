@@ -2,6 +2,7 @@ package main
 
 import (
 	"encoding/json"
+	"fmt"
 	"log"
 	"net/http"
 )
@@ -19,6 +20,12 @@ func ResumePage(w http.ResponseWriter, r *http.Request) {
 
 }
 
+func ProjectPage(w http.ResponseWriter, r *http.Request) {
+	http.ServeFile(w, r, "./home/projects.html")
+
+	///여기서부터
+
+}
 func PrintPDF(w http.ResponseWriter, r *http.Request) {
 	//PDF Creator API required
 }
@@ -77,8 +84,29 @@ func SendingFeedback(w http.ResponseWriter, r *http.Request) {
 	db.Create(&feedback)
 }
 
+type Projectarray struct {
+	Projects []Project `json:"projects"`
+}
+
 func ReturnProject(w http.ResponseWriter, r *http.Request) {
+
+	fmt.Println("logged well")
 	//DB conn required - Create, Read, Update
+	var projects []Project
+
+	var projectarr Projectarray
+	db := ConnectDB()
+	db.Find(&projects)
+
+	projectarr.Projects = projects
+	data, err := json.Marshal(projectarr)
+	if err != nil {
+		log.Fatal("error occured with Marshaling the Projectdata", err)
+	}
+	w.Header().Set("Content-Type", "application/json")
+
+	w.Write(data)
+
 }
 
 type Skillang struct {
