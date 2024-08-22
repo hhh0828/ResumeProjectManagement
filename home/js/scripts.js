@@ -103,6 +103,7 @@ document.addEventListener("DOMContentLoaded", function () {
         .catch(error => console.error('Error fetching data:', error));
 });
 */
+/*
 document.addEventListener("DOMContentLoaded", function () {
     let allExperienceData = [];
     let currentIndex = 0;
@@ -166,3 +167,4 @@ document.addEventListener("DOMContentLoaded", function () {
     // "더보기" 버튼 클릭 이벤트
 
 });
+*/

@@ -23,9 +23,13 @@ func ResumePage(w http.ResponseWriter, r *http.Request) {
 func ProjectPage(w http.ResponseWriter, r *http.Request) {
 	http.ServeFile(w, r, "./home/projects.html")
 
-	///여기서부터
-
 }
+
+func Contactpage(w http.ResponseWriter, r *http.Request) {
+
+	http.ServeFile(w, r, "./home/contact.html")
+}
+
 func PrintPDF(w http.ResponseWriter, r *http.Request) {
 	//PDF Creator API required
 }
@@ -73,15 +77,22 @@ func ReturnResume(w http.ResponseWriter, r *http.Request) {
 
 func SendingFeedback(w http.ResponseWriter, r *http.Request) {
 	//DB conn required - Create
+	//Send the username if it works fine.
 	//Object
+	fmt.Println("working?")
 	var feedback Feedback
 	err := json.NewDecoder(r.Body).Decode(&feedback)
 	if err != nil {
 		log.Fatal("error occured with Decoding the Feedback data with message :", err)
 	}
+	fmt.Println(feedback)
 	db := ConnectDB()
 	db.AutoMigrate(&Feedback{})
 	db.Create(&feedback)
+
+	data, _ := json.Marshal(feedback.Name)
+	w.Header().Set("Content-Type", "application/json")
+	w.Write(data)
 }
 
 type Projectarray struct {
