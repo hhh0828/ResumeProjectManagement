@@ -52,13 +52,13 @@ type Project struct {
 	Name      string `'json:"name"`
 	ShortDesc string `json:"shortdesc"`
 	LongDesc  string `json:"longdesc"`
-	ImgUrl    string
+	ImgUrl    string `json:"imgurl"`
 	DetailUrl string `json:"detailurl"`
 }
 
 func ConnectDB() *gorm.DB {
 
-	dsn := "host=localhost user=postgres password=root1234 dbname=resume1 port=8801 sslmode=disable TimeZone=Asia/Seoul"
+	dsn := "host=172.17.0.2 user=postgres password=root1234 dbname=resume1 port=5432 sslmode=disable TimeZone=Asia/Seoul"
 	db, err := gorm.Open(postgres.Open(dsn), &gorm.Config{})
 	if err != nil {
 		log.Fatal("error occrued with : ", err)
