@@ -9,7 +9,7 @@ import (
 	"github.com/nfnt/resize"
 )
 
-func AdjustingScale(img string) {
+func AdjustingScale(img string, width uint, height uint) {
 
 	file, err := os.Open(img)
 	if err != nil {
@@ -24,9 +24,6 @@ func AdjustingScale(img string) {
 		fmt.Println("Error decoding image:", err)
 		return
 	}
-
-	var width uint = 300
-	var height uint = 300
 
 	//imgresized := image.NewRGBA(image.Rect(0, 0, width, height))
 	resizedimg := resize.Resize(width, height, imges, resize.Lanczos3)
