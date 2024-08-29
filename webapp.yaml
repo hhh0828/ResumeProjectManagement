@@ -1,0 +1,41 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: resumeproject
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: DFW
+  template:
+    metadata:
+      labels:
+        app: DFW
+    spec:
+      containers:
+      - name: resumemanagement
+        image: hyunhohong/resume:latest
+        ports:
+        - containerPort: 8700
+      - name: fileserver
+        volumeMounts:
+        - mountPath: /fs
+          name: test-pv
+        image: hyunhohong/fileserver:latest
+        ports:
+        - containerPort: 8770
+      - name: postgres
+        volumeMounts:
+        - mountPath: /db
+          name: test-pv
+        image: hyunhohong/postgredb:latest
+        env:
+        - name: POSTGRES_PASSWORD
+          value: "root1234"
+        ports:
+        - containerPort: 8801
+      volumes:
+      - name: test-pv
+        persistentVolumeClaim:
+          claimName: test-pv  # 여기에 실제 PVC 이름을 사용해야 합니다.
+      

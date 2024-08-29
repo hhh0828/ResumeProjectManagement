@@ -31,20 +31,22 @@ type Experiences struct {
 type Resume struct {
 	gorm.Model
 	Experiences []Experience `gorm:"foreignKey:ResumeID"`
-	Skills      []string     `gorm:"type:text[]"`
-	Languages   []string     `gorm:"type:text[]"`
+	Skills      []string     `gorm:"foreignKey:ResumeID"`
+	Languages   []string     `gorm:"foreignKey:ResumeID"`
 }
 
 type Skill struct {
 	ID          uint
 	Name        string
 	Description string
+	ResumeID    uint
 }
 
 type Languages struct {
 	ID          uint
 	Name        string
 	Proficiency string
+	ResumeID    uint
 }
 
 type Project struct {
@@ -58,7 +60,7 @@ type Project struct {
 
 func ConnectDB() *gorm.DB {
 
-	dsn := "host=172.17.0.2 user=postgres password=root1234 dbname=resume1 port=5432 sslmode=disable TimeZone=Asia/Seoul"
+	dsn := "host=172.17.0.4 user=postgres password=root1234 dbname=resume1 port=5432 sslmode=disable TimeZone=Asia/Seoul"
 	db, err := gorm.Open(postgres.Open(dsn), &gorm.Config{})
 	if err != nil {
 		log.Fatal("error occrued with : ", err)

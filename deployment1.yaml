@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: DFW
+  template:
+    metadata:
+      labels:
+        app: DFW
+    spec:
+      containers:
+      - name: proxycontainer
+        image: nginx:latest
+        ports:
+        - containerPort: 80

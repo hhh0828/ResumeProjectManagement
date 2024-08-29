@@ -30,7 +30,7 @@ docker CRI
 
 
 worker node1번
-laptop- samsung
+HyperV unbunto 20.04 lts
 Pod1
 Volume1 resource provider - Local directory mount 사용
 
@@ -39,7 +39,7 @@ Container4 - ImgFS - transfer file. when the
 
 
 worker node2번
-desktop- 10940x
+HyperV unbunto 20.04 lts
 
 Pod1
 Container1 - NginX Web Server - proxy and transfer static file. port 80 to 8800 / Pod2 IP address
