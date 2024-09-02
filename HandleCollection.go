@@ -25,6 +25,11 @@ func ProjectPage(w http.ResponseWriter, r *http.Request) {
 
 }
 
+func Editproject(w http.ResponseWriter, r *http.Request) {
+	http.ServeFile(w, r, "./home/editproject.html")
+
+}
+
 func Contactpage(w http.ResponseWriter, r *http.Request) {
 
 	http.ServeFile(w, r, "./home/contact.html")
@@ -119,6 +124,29 @@ func ReturnResume(w http.ResponseWriter, r *http.Request) {
 
 }
 
+func RequestProjectEdit(w http.ResponseWriter, r *http.Request) {
+
+	var project Project
+	err := json.NewDecoder(r.Body).Decode(&project)
+	if err != nil {
+		log.Fatal("error occured with Decoding the Feedback data with message :", err)
+	}
+	db := ConnectDB()
+
+	var modelproject Project
+
+	db.First(&modelproject, project.ID)
+	modelproject.Name = project.Name
+	modelproject.ShortDesc = project.ShortDesc
+	modelproject.LongDesc = project.LongDesc
+	db.Save(&modelproject)
+
+	thanks := project.Name + "에 대한 편집이 완료되었습니다."
+	data, _ := json.Marshal(thanks)
+	w.Header().Set("Content-Type", "application/json")
+	w.Write(data)
+}
+
 func SendingFeedback(w http.ResponseWriter, r *http.Request) {
 	//DB conn required - Create
 	//Send the username if it works fine.
@@ -141,6 +169,31 @@ func SendingFeedback(w http.ResponseWriter, r *http.Request) {
 
 type Projectarray struct {
 	Projects []Project `json:"projects"`
+}
+
+type ProjectPKid struct {
+	Pkid uint `json:"projectId"`
+}
+
+func Returnprojectone(w http.ResponseWriter, r *http.Request) {
+
+	var projectpkid ProjectPKid
+	err := json.NewDecoder(r.Body).Decode(&projectpkid)
+	if err != nil {
+		log.Fatal("error occured with getting data from client ", err)
+	}
+	db := ConnectDB()
+	fmt.Println(projectpkid)
+
+	dbproject := new(Project)
+	fmt.Println("current PK id is ", projectpkid.Pkid)
+	db.First(&dbproject, projectpkid.Pkid)
+	data, err := json.Marshal(dbproject)
+	if err != nil {
+		log.Fatal("error occured with Marshaling the Projectdata", err)
+	}
+	w.Header().Set("Content-Type", "application/json")
+	w.Write(data)
 }
 
 func ReturnProject(w http.ResponseWriter, r *http.Request) {

@@ -4,7 +4,7 @@ metadata:
   name: test-pv2
 spec:
   capacity:
-    storage: 1Gi
+    storage: 5Gi
   volumeMode: Filesystem
   accessModes:
   - ReadWriteMany

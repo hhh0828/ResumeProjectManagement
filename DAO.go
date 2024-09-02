@@ -16,8 +16,8 @@ type Feedback struct {
 }
 
 type Experience struct {
-	ID          uint
-	Period      int // the days i spent during works.
+	ID          uint `gorm:"primaryKey"`
+	Period      int  // the days i spent during works.
 	Role        string
 	Company     string
 	Description string
@@ -43,21 +43,21 @@ type ResumeJ struct {
 
 // need to change when the resume page going out to user so the data should have ID and Desc.
 type Skill struct {
-	ID          uint
+	ID          uint `gorm:"primaryKey"`
 	Name        string
 	Description string
 	ResumeID    uint
 }
 
 type Languages struct {
-	ID          uint
+	ID          uint `gorm:"primaryKey"`
 	Name        string
 	Proficiency string
 	ResumeID    uint
 }
 
 type Project struct {
-	ID        uint
+	ID        uint   `gorm:"primaryKey"`
 	Name      string `'json:"name"`
 	ShortDesc string `json:"shortdesc"`
 	LongDesc  string `json:"longdesc"`
@@ -67,7 +67,7 @@ type Project struct {
 
 func ConnectDB() *gorm.DB {
 
-	dsn := "host=localhost user=postgres password=root1234 dbname=resume1 port=5432 sslmode=disable TimeZone=Asia/Seoul"
+	dsn := "host=172.17.0.4 user=postgres password=root1234 dbname=resume1 port=5432 sslmode=disable TimeZone=Asia/Seoul"
 	db, err := gorm.Open(postgres.Open(dsn), &gorm.Config{})
 	if err != nil {
 		log.Fatal("error occrued with : ", err)
