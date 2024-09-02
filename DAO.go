@@ -67,7 +67,8 @@ type Project struct {
 
 func ConnectDB() *gorm.DB {
 
-	dsn := "host=172.17.0.4 user=postgres password=root1234 dbname=resume1 port=5432 sslmode=disable TimeZone=Asia/Seoul"
+	//dsn := "host=localhost, port=5432" // for kubernetes Pod deployment workernode -1
+	dsn := "host=172.17.0.4 user=postgres password=root1234 dbname=resume1 port=5432 sslmode=disable TimeZone=Asia/Seoul" // for docker infra deployment.
 	db, err := gorm.Open(postgres.Open(dsn), &gorm.Config{})
 	if err != nil {
 		log.Fatal("error occrued with : ", err)
