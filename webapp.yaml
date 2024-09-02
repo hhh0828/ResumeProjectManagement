@@ -10,23 +10,23 @@ spec:
   template:
     metadata:
       labels:
-        app: DFW
+        app: DFW 
     spec:
       containers:
       - name: resumemanagement
-        image: hyunhohong/resume:latest
+        image: hyunhohong/resume:latest2
         ports:
         - containerPort: 8700
       - name: fileserver
         volumeMounts:
-        - mountPath: /fs
-          name: test-pv
-        image: hyunhohong/fileserver:latest
+        - mountPath: /usr/src/app/ImageDir
+          name: test-pv2
+        image: hyunhohong/fileserver:latest1
         ports:
         - containerPort: 8770
       - name: postgres
         volumeMounts:
-        - mountPath: /db
+        - mountPath: /var/lib/postgresql/data
           name: test-pv
         image: hyunhohong/postgredb:latest
         env:
@@ -38,4 +38,6 @@ spec:
       - name: test-pv
         persistentVolumeClaim:
           claimName: test-pv  # 여기에 실제 PVC 이름을 사용해야 합니다.
-      
+      - name: test-pv2
+        persistentVolumeClaim:
+          claimName: test-pv2

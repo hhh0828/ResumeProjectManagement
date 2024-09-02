@@ -30,11 +30,18 @@ type Experiences struct {
 
 type Resume struct {
 	gorm.Model
-	Experiences []Experience `gorm:"foreignKey:ResumeID"`
-	Skills      []string     `gorm:"foreignKey:ResumeID"`
-	Languages   []string     `gorm:"foreignKey:ResumeID"`
+	Experiences Experience `gorm:"foreignKey:ResumeID"`
+	Skills      string     `gorm:"foreignKey:ResumeID"`
+	Languages   string     `gorm:"foreignKey:ResumeID"`
 }
 
+type ResumeJ struct {
+	Experiences []Experience `json:"Experiences"`
+	Skills      []Skill      `json:"Skills"`
+	Languages   []Languages  `json:"Languages"`
+}
+
+// need to change when the resume page going out to user so the data should have ID and Desc.
 type Skill struct {
 	ID          uint
 	Name        string
@@ -60,12 +67,13 @@ type Project struct {
 
 func ConnectDB() *gorm.DB {
 
-	dsn := "host=172.17.0.4 user=postgres password=root1234 dbname=resume1 port=5432 sslmode=disable TimeZone=Asia/Seoul"
+	dsn := "host=localhost user=postgres password=root1234 dbname=resume1 port=5432 sslmode=disable TimeZone=Asia/Seoul"
 	db, err := gorm.Open(postgres.Open(dsn), &gorm.Config{})
 	if err != nil {
 		log.Fatal("error occrued with : ", err)
 	}
-	db.AutoMigrate(&Feedback{}, &Resume{}, &Experience{}, &Skill{}, &Languages{}, &Project{})
+
+	db.AutoMigrate(&Feedback{}, &Experience{}, &Skill{}, &Languages{}, &Project{})
 
 	return db
 }

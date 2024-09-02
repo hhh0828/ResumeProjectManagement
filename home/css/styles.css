@@ -286,6 +286,9 @@ pre code {
   word-break: normal;
 }
 
+
+
+
 code {
   font-size: 0.875em;
   color: var(--bs-code-color);
@@ -6028,6 +6031,9 @@ textarea.form-control-lg {
   --bs-spinner-border-width: 0.2em;
 }
 
+
+
+
 @keyframes spinner-grow {
   0% {
     transform: scale(0);
@@ -6989,6 +6995,12 @@ textarea.form-control-lg {
 
 .overflow-auto {
   overflow: auto !important;
+}
+
+.upload {
+  position: absolute;
+  top: 0;
+  right: 0;
 }
 
 .overflow-hidden {

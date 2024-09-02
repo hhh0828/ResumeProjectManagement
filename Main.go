@@ -49,3 +49,11 @@ Container3 - PostgreDB - DB server
 https://kubernetes.io/ko/docs/tutorials/kubernetes-basics/create-cluster/cluster-intro/
 
 */
+
+//todo
+
+// bring the data from server when the user request the page. the data should be a type of writable.
+// front page creating required.
+// DB remaster >> when server sends data to client, the data should have a PKey.
+// DB architecture refactoring. - high level.
+//
