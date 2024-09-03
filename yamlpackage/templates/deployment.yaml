@@ -1,0 +1,53 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name:  resumeproject
+  labels:
+    app.kubernetes.io/name: resumemanagement
+    app.kubernetes.io/instance: {{ .Release.Name }}
+    hhh: testbuild
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app: DFW
+      app.kubernetes.io/name: resumemanagement
+      app.kubernetes.io/instance: {{ .Release.Name }}
+  template:
+    metadata:
+      labels:
+        app: DFW
+        app.kubernetes.io/name: resumemanagement
+        app.kubernetes.io/instance: {{ .Release.Name }}
+    spec:
+      containers:
+      - name: resumemanagement
+        image: hyunhohong/resume:latest2
+        ports:
+        - containerPort: 8700
+      - name: fileserver
+        volumeMounts:
+        - mountPath: /usr/src/app/ImageDir
+          name: test-pv2
+        image: hyunhohong/fileserver:latest1
+        ports:
+        - containerPort: 8770
+      - name: postgres
+        volumeMounts:
+        - mountPath: /var/lib/postgresql/data
+          name: test-pv
+        image: hyunhohong/postgredb:latest
+        env:
+        - name: POSTGRES_PASSWORD
+          value: "root1234"
+        ports:
+        - containerPort: 8801
+      volumes:
+      - name: test-pv
+        persistentVolumeClaim:
+          claimName: test-pv  # 여기에 실제 PVC 이름을 사용해야 합니다.
+      - name: test-pv2
+        persistentVolumeClaim:
+          claimName: test-pv2
+
+      

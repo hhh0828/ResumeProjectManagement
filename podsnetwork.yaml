@@ -7,7 +7,8 @@ spec:
   selector:
     app: DFW
   ports:
-    - port: 8700
+    - name : webappmain
+      port: 8700
       # By default and for convenience, the `targetPort` is set to
       # the same value as the `port` field.
       targetPort: 8700
@@ -15,8 +16,8 @@ spec:
       # By default and for convenience, the Kubernetes control plane
       # will allocate a port from a range (default: 30000-32767)
       nodePort: 30007
-  ports:
-    - port: 8770
+    - name : imageserver
+      port: 8770
       # By default and for convenience, the `targetPort` is set to
       # the same value as the `port` field.
       targetPort: 8770
@@ -24,4 +25,12 @@ spec:
       # By default and for convenience, the Kubernetes control plane
       # will allocate a port from a range (default: 30000-32767)
       nodePort: 30008
-      
+    - name : practice
+      port: 8010
+      # By default and for convenience, the `targetPort` is set to
+      # the same value as the `port` field.
+      targetPort: 8010
+      # Optional field
+      # By default and for convenience, the Kubernetes control plane
+      # will allocate a port from a range (default: 30000-32767)
+      nodePort: 30009
