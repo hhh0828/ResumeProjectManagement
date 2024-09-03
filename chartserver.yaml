@@ -19,4 +19,8 @@ spec:
         image: hyunhohong/fileserver:latest1
         ports:
         - containerPort: 8777
+    volumes:
+      - name: test-pv3
+        persistentVolumeClaim:
+          claimName: test-pv3  # 여기에 실제 PVC 이름을 사용해야 합니다.
   
