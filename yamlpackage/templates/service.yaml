@@ -16,7 +16,7 @@ spec:
     - name: webappadmin
       port: {{ .Values.webappmainPort }}
       targetPort: 8700
-      NodePort : 30007
+      NodePort : 30010
     - name : imageserver
       port: {{ .Values.imageserverPort }}
       # By default and for convenience, the `targetPort` is set to
@@ -25,4 +25,4 @@ spec:
       # Optional field
       # By default and for convenience, the Kubernetes control plane
       # will allocate a port from a range (default: 30000-32767)
-      nodePort: 30008
+      nodePort: 30011
