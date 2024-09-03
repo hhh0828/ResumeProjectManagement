@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: chartserver
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: DFW
+  template:
+    metadata:
+      labels:
+        app: DFW 
+    spec:
+      - name: fileserver
+        volumeMounts:
+        - mountPath: /usr/src/app/ChartsDir
+          name: test-pv3
+        image: hyunhohong/fileserver:latest1
+        ports:
+        - containerPort: 8777
+  
