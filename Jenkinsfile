@@ -5,6 +5,8 @@ pipeline {
         stage('Build') {
             steps {
                 echo 'Building...'
+                sh 'go version'
+                sh 'go mod tidy'
                 // 여기서 빌드 명령어 실행 (예: mvn clean install)
             }
         }
