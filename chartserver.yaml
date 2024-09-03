@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: fileserver
-        image: hyunhohong/fileserver:latest4
+        image: hyunhohong/fileserver:latest5
         ports:
         - containerPort: 8777
         volumeMounts:
