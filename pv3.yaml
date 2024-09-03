@@ -1,11 +1,22 @@
 apiVersion: v1
-kind: PersistentVolumeClaim
+kind: PersistentVolume
 metadata:
   name: test-pv3
 spec:
+  capacity:
+    storage: 20Mi
+  volumeMode: Filesystem
   accessModes:
   - ReadWriteMany
-  resources:
-    requests:
-      storage: 10Mi
+  persistentVolumeReclaimPolicy: Retain
   storageClassName: local-storage
+  local:
+    path: /mnt/disks/ssd3
+  nodeAffinity:
+    required:
+      nodeSelectorTerms:
+      - matchExpressions:
+        - key: kubernetes.io/hostname
+          operator: In
+          values:
+          - workernode1
