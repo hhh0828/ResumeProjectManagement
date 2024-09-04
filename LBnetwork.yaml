@@ -8,4 +8,5 @@ spec:
   ports:
     - port: 8111
       targetPort: 30007
+      Nodeport: 30007
   type: LoadBalancer
