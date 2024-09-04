@@ -9,6 +9,23 @@ func main() {
 
 }
 
+/* 0905 todo Dynamic Infra 환경 구축
+
+1. AWS > EC2. T2.Micro > nginX LT Container 설치 - completed
+2. nginX인증서 설치 - not completed
+3. AWS 공인아이피 도메인 등록 - completed, wating for 24hours before it acrivate itself
+4. nginX proxy pass 설정 - not completed - after domain registered on the DNS servers globally
+5. 쿠버네티스 로컬환경 인그레스 서비스 설정 - not completed need to case study.
+6. 로컬환경 방화벽 설정 포트포워딩 - not completed.
+
+7. resumemanagement app Helm Package and deploying -
+[options]
+7-1.add a func> query owned IP address when it changes. and send it out to the NginX server and update Nginx Proxy
+// 위 상황은 로컬환경의 공인아이피가 변경되었을때, 노드에서 현 공인아이피를 확인 후, 외부서버로 전달 한다. External Name service가 있기때문에 내부로 들어오는건 막혔지만 외부 통신은 가능하다.
+7-2. add a pod with above func and change service.yaml.
+// 배포할 deployment의 service 매니페스트의 로컬 부분을 수정한다.
+// 수정후 배포 완료하고 NginX에 OK사인 전달, 서비스 재개
+*/
 /*
 Master Node
 laptop - Asus G14

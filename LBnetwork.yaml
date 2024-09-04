@@ -6,7 +6,6 @@ spec:
   selector:
     app: DFW
   ports:
-    - port: 8111
-      targetPort: 30007
-      Nodeport: 30007
+    - port: 8080
+      targetPort: 80
   type: LoadBalancer
