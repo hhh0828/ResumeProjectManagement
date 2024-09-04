@@ -3,14 +3,9 @@ kind: Service
 metadata:
   name: applb
 spec:
-  type: LoadBalancer
   selector:
     app: DFW
   ports:
     port: 8111
-      # By default and for convenience, the `targetPort` is set to
-      # the same value as the `port` field.
     targetPort: 30007
-      # Optional field
-      # By default and for convenience, the Kubernetes control plane
-      # will allocate a port from a range (default: 30000-32767)
+  type: LoadBalancer
