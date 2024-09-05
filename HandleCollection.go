@@ -26,7 +26,7 @@ func ProjectPage(w http.ResponseWriter, r *http.Request) {
 }
 
 func Projectuploadpage(w http.ResponseWriter, r *http.Request) {
-	http.ServeFile(w, r, "./homee/projectuploadpage")
+	http.ServeFile(w, r, "./home/projectuploadpage.html")
 }
 
 func Editproject(w http.ResponseWriter, r *http.Request) {
@@ -151,6 +151,25 @@ func RequestProjectEdit(w http.ResponseWriter, r *http.Request) {
 	w.Write(data)
 }
 
+func UploadProject(w http.ResponseWriter, r *http.Request) {
+
+	var uploadedproject Project
+	err := json.NewDecoder(r.Body).Decode(&uploadedproject)
+	if err != nil {
+		log.Fatal("error occured with user project upload Data decode", err)
+	}
+
+	Upload(&uploadedproject)
+	fmt.Println("Project", uploadedproject.Name, "has been uploaded")
+	fmt.Println(uploadedproject)
+
+	data, err := json.Marshal(uploadedproject.Name + " has been uploaded Thank you sir!")
+	if err != nil {
+		log.Fatal("fatal error occured with your Data marshaling", err)
+	}
+	w.Header().Set("Content-Type", "application/json")
+	w.Write(data)
+}
 func SendingFeedback(w http.ResponseWriter, r *http.Request) {
 	//DB conn required - Create
 	//Send the username if it works fine.
@@ -200,7 +219,13 @@ func Returnprojectone(w http.ResponseWriter, r *http.Request) {
 
 func ReturnProject(w http.ResponseWriter, r *http.Request) {
 
-	fmt.Println("logged well")
+	fmt.Println("a user accessed to ReturnProject, the IP address is :", r.RemoteAddr)
+	/*func() {
+		not impletemented yet. need to write the logs that user accessed to your site.
+		and see your project.
+	}
+	*/
+
 	//DB conn required - Create, Read, Update
 	var projects []Project
 

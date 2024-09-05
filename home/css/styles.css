@@ -178,8 +178,15 @@ abbr[title] {
 }
 
 #loadMoreButton {
-  bottom: 1;
+  bottom: 10;
   left: 0.5;
+  width: 30%; /* Optional: Make button full width */
+  margin-top: 20px; /* 콘텐츠와 버튼 사이에 공간을 추가할 수 있습니다 (옵션) */
+}
+
+#uploadpagerequest {
+  bottom: 10;
+  left: 0.2;
   width: 30%; /* Optional: Make button full width */
   margin-top: 20px; /* 콘텐츠와 버튼 사이에 공간을 추가할 수 있습니다 (옵션) */
 }
