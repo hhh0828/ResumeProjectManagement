@@ -170,6 +170,26 @@ func UploadProject(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
 	w.Write(data)
 }
+
+func DeleteProject(w http.ResponseWriter, r *http.Request) {
+
+	var deprecateddata Project
+	err := json.NewDecoder(r.Body).Decode(&deprecateddata)
+	if err != nil {
+		log.Fatal("error occured with user project upload Data decode", err)
+	}
+
+	Delete(&deprecateddata)
+	fmt.Println("Project", deprecateddata.ID, "has been deleted")
+
+	data, err := json.Marshal("your project has been removed")
+	if err != nil {
+		log.Fatal("fatal error occured with your Data marshaling", err)
+	}
+	w.Header().Set("Content-Type", "application/json")
+	w.Write(data)
+}
+
 func SendingFeedback(w http.ResponseWriter, r *http.Request) {
 	//DB conn required - Create
 	//Send the username if it works fine.

@@ -30,6 +30,7 @@
                 <input class="form-control" type="file" id="projectImage" name="projectImage" />
             </div>
             <button type="submit" class="btn btn-primary">Save Changes</button>
+            <button type="submit" class="btn btn-primary"></button>
         </form>
     </div>
 
@@ -39,7 +40,6 @@
                 event.preventDefault();
                 
                 const updatedData = {
-                    ID: projectId,
                     name: document.getElementById('projectName').value,
                     shortdesc: document.getElementById('projectDescription').value,
                     longdesc: document.getElementById('DescriptionDetail').value,

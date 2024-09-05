@@ -19,6 +19,10 @@ func (f *Feedback) Upload() {
 	db := ConnectDB()
 	db.Create(f)
 }
+func (f *Feedback) Delete() {
+	db := ConnectDB()
+	db.Delete(f)
+}
 
 type Experience struct {
 	ID          uint `gorm:"primaryKey"`
@@ -73,6 +77,11 @@ type Project struct {
 func (p *Project) Upload() {
 	db := ConnectDB()
 	db.Create(p)
+}
+
+func (p *Project) Delete() {
+	db := ConnectDB()
+	db.Delete(p)
 }
 
 func ConnectDB() *gorm.DB {

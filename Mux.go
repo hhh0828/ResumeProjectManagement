@@ -23,6 +23,7 @@ func NewHandlers() *http.ServeMux {
 	mux.HandleFunc("/requestprojectedit", RequestProjectEdit)
 	mux.HandleFunc("/projectuploadpage", Projectuploadpage)
 	mux.HandleFunc("/uploadproject", UploadProject)
+	mux.HandleFunc("/deleteproject", DeleteProject)
 	//파일서버
 	staticFileServer := http.FileServer(http.Dir("./home"))
 	mux.Handle("/", http.StripPrefix("/", staticFileServer))
