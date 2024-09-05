@@ -25,6 +25,10 @@ func ProjectPage(w http.ResponseWriter, r *http.Request) {
 
 }
 
+func Projectuploadpage(w http.ResponseWriter, r *http.Request) {
+	http.ServeFile(w, r, "./homee/projectuploadpage")
+}
+
 func Editproject(w http.ResponseWriter, r *http.Request) {
 	http.ServeFile(w, r, "./home/editproject.html")
 
@@ -158,9 +162,7 @@ func SendingFeedback(w http.ResponseWriter, r *http.Request) {
 		log.Fatal("error occured with Decoding the Feedback data with message :", err)
 	}
 	fmt.Println(feedback)
-	db := ConnectDB()
-	db.AutoMigrate(&Feedback{})
-	db.Create(&feedback)
+	Upload(&feedback)
 
 	data, _ := json.Marshal(feedback.Name)
 	w.Header().Set("Content-Type", "application/json")

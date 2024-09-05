@@ -15,6 +15,11 @@ type Feedback struct {
 	Message    string
 }
 
+func (f *Feedback) Upload() {
+	db := ConnectDB()
+	db.Create(f)
+}
+
 type Experience struct {
 	ID          uint `gorm:"primaryKey"`
 	Period      int  // the days i spent during works.
@@ -63,6 +68,11 @@ type Project struct {
 	LongDesc  string `json:"longdesc"`
 	ImgUrl    string `json:"imgurl"`
 	DetailUrl string `json:"detailurl"`
+}
+
+func (p *Project) Upload() {
+	db := ConnectDB()
+	db.Create(p)
 }
 
 func ConnectDB() *gorm.DB {
