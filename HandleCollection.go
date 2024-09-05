@@ -179,7 +179,8 @@ func DeleteProject(w http.ResponseWriter, r *http.Request) {
 		log.Fatal("error occured with user project upload Data decode", err)
 	}
 
-	Delete(&deprecateddata)
+	db := ConnectDB()
+	db.Delete(&Project{}, deprecateddata.ID)
 	fmt.Println("Project", deprecateddata.ID, "has been deleted")
 
 	data, err := json.Marshal("your project has been removed")

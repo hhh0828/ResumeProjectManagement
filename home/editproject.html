@@ -29,8 +29,9 @@
                 <input class="form-control" type="file" id="projectImage" name="projectImage" />
             </div>
             <button type="submit" class="btn btn-primary">Save Changes</button>
-            <button type="delete" class="btn btn-primary">Delete Project</button>
+            <button type="button" class="btn btn-primary" id="deletebutton">Delete Project</button>
         </form>
+        
     </div>
 
     <script>
@@ -78,7 +79,7 @@
                 
                 // 여기서 수정된 데이터를 백엔드로 전송하는 코드를 작성합니다.
                 fetch('/requestprojectedit', { // 여기에 실제 서버 URL 입력
-                method: 'POST',
+                method: 'Delete',
                 headers: {
                       'Content-Type': 'application/json'
                   },
@@ -89,21 +90,19 @@
                 console.log('Success:', data);
                  // 성공 시 처리 로직 추가
                  alert(`Form submitted successfully! ${data}`);
+                 window.location.href = "/project"
                 })
 
                 .catch((error) => {
                     console.error('Error:', error);
                  // 오류 시 처리 로직 추가
                  alert("An error occurred. Please try again.");
+                 
               });
             });
 
 
-        
-
-
-            document.getElementById('editProjectForm').addEventListener('delete', function(event) {
-                event.preventDefault();
+            document.getElementById('deletebutton').addEventListener('click', function(event) {
                 
                 const deprecatedata = {
                     ID: projectId,
@@ -125,6 +124,7 @@
                 console.log('Success:', data);
 
                 alert('your data has been deleted successfully! refresh your browser', data);
+                window.location.href = "/projectspage";
                 })
 
                 .catch((error) => {
@@ -133,7 +133,7 @@
                  alert("An error occurred. Please try again.");
               });
             });
-} );
+});
 
 
     </script>

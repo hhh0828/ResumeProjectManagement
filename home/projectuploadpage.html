@@ -30,7 +30,6 @@
                 <input class="form-control" type="file" id="projectImage" name="projectImage" />
             </div>
             <button type="submit" class="btn btn-primary">Save Changes</button>
-            <button type="submit" class="btn btn-primary"></button>
         </form>
     </div>
 
@@ -60,7 +59,9 @@
                 .then(data => {
                 console.log('Success:', data);
                  // 성공 시 처리 로직 추가
+                 window.location.href = "/projectspage";
                  alert(`Form submitted successfully! ${data}`);
+                 
 })
 
                 .catch((error) => {
