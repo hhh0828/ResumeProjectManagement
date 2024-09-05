@@ -29,10 +29,13 @@ func main() {
 
 7-3. 업로드 및 DB 관련 추가 api 개발
 	0905 added > projectuploadpage added.
+	0905 added > deleteproject added
+
 7-4. 리팩토링
 	0905 added > data base table interface upload feature implemented.
 
 7-5. 개선점 피드백 받기
+	nginX > location /files/ 추가 및 443에서 hyunhoworld.site 추가하기.
 7-6. 개선점 픽스
 7-7. 아키텍팅 도식화 추상화된 내용 정리 및 resumesite에 업로드
 
