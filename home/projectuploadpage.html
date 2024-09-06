@@ -57,8 +57,12 @@
                  method: 'POST',
                     body: ImageData
                 })
+                .then(data => {
+             // 서버 응답 데이터 처리
+                console.log('Success:', data);
+                window.location.href = "/projectspage"; // 성공 시 페이지 이동
+                })
                 
-                window.location.href = "/projectspage"
                 // 여기서 수정된 데이터를 백엔드로 전송하는 코드를 작성합니다.
                 
                 .catch((error) => {
