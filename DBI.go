@@ -5,7 +5,7 @@ type DBupdater interface {
 	Delete()
 }
 
-// func that implements the DBupdater interface. // 업로드 함수를 가진 놈이면 디비를 업로드함.
+// func that implements the DBupdater interface.
 func Upload(a DBupdater) {
 	a.Upload()
 }

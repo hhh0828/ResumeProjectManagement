@@ -163,12 +163,25 @@ func UploadProject(w http.ResponseWriter, r *http.Request) {
 	fmt.Println("Project", uploadedproject.Name, "has been uploaded")
 	fmt.Println(uploadedproject)
 
-	data, err := json.Marshal(uploadedproject.Name + " has been uploaded Thank you sir!")
+	data, err := json.Marshal(uploadedproject.Name + "has been uploaded Thank you sir!")
 	if err != nil {
 		log.Fatal("fatal error occured with your Data marshaling", err)
 	}
 	w.Header().Set("Content-Type", "application/json")
 	w.Write(data)
+}
+
+func ImageurlSaveRequest(w http.ResponseWriter, r *http.Request) {
+
+	// Parse multipart form with max file size
+
+	var project Project
+	err := json.NewDecoder(r.Body).Decode(&project)
+	if err != nil {
+		log.Println("error occured", err)
+	}
+
+	Upload(&project)
 }
 
 func DeleteProject(w http.ResponseWriter, r *http.Request) {
@@ -236,6 +249,7 @@ func Returnprojectone(w http.ResponseWriter, r *http.Request) {
 	}
 	w.Header().Set("Content-Type", "application/json")
 	w.Write(data)
+
 }
 
 func ReturnProject(w http.ResponseWriter, r *http.Request) {

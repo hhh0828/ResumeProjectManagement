@@ -38,32 +38,32 @@
             document.getElementById('editProjectForm').addEventListener('submit', function(event) {
                 event.preventDefault();
                 
+                /*
                 const updatedData = {
                     name: document.getElementById('projectName').value,
                     shortdesc: document.getElementById('projectDescription').value,
                     longdesc: document.getElementById('DescriptionDetail').value,
-                    //image: document.getElementById('projectImage').files[0] // 이미지 파일 처리
+                     // 이미지 파일 처리
                 };
+                */
+                //const fileServerUrl = 'https://www.hyunhoworld.site/files/imageupload'; // 파일 서버의 URL
+                const ImageData = new FormData();
+                ImageData.append('image', document.getElementById('projectImage').files[0]);
+                ImageData.append('name', document.getElementById('projectName').value)
+                ImageData.append('name', document.getElementById('projectDescription').value)
+                ImageData.append('name', document.getElementById('DescriptionDetail').value)
 
-                console.log('Updated Data:', updatedData);
-                
-                // 여기서 수정된 데이터를 백엔드로 전송하는 코드를 작성합니다.
-                fetch('/uploadproject', { // 여기에 실제 서버 URL 입력
-                method: 'POST',
-                headers: {
-                      'Content-Type': 'application/json'
-                  },
-                  body: JSON.stringify(updatedData)
+                fetch('https://www.hyunhoworld.site/files/imageupload', {
+                 method: 'POST',
+                    body: ImageData
                 })
                 .then(response => response.json())
                 .then(data => {
-                console.log('Success:', data);
-                 // 성공 시 처리 로직 추가
-                 window.location.href = "/projectspage";
-                 alert(`Form submitted successfully! ${data}`);
-                 
-})
-
+                console.log('Image uploaded:', data);
+                console.log('Updated Data:', ImageData);
+                })
+                // 여기서 수정된 데이터를 백엔드로 전송하는 코드를 작성합니다.
+                
                 .catch((error) => {
                     console.error('Error:', error);
                  // 오류 시 처리 로직 추가
