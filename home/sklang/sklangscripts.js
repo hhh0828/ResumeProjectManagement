@@ -5,13 +5,19 @@ document.addEventListener("DOMContentLoaded", function () {
     const loadMoreButton = document.getElementById('loadMoreButton');
     const experiencesPerPage = 2; // 한 번에 표시할 경험의 수
 
+    function convertLineBreaks(text) {
+        return text.replace(/\n/g, '<br>');
+    }
+
     function displayExperience() {
         const endIndex = Math.min(currentIndex + experiencesPerPage, allExperienceData.length);
 
         for (let i = currentIndex; i < endIndex; i++) {
             const experience = allExperienceData[i];
 
+            // 줄바꿈 처리
             const description = convertLineBreaks(experience.description);
+
             const experienceCard = ` 
                 <div class="card shadow border-0 rounded-4 mb-5" data-id="${experience.ID}">
                     <div class="card-body p-5">
@@ -28,7 +34,7 @@ document.addEventListener("DOMContentLoaded", function () {
                                 </div>
                             </div>
                             <div class="col-lg-8">
-                                <div>${experience.description}</div>
+                                <div>${description}</div>
                             </div>
                         </div>
                     </div>
@@ -175,7 +181,7 @@ document.addEventListener("DOMContentLoaded", function () {
                             </div>
                             <div class="mb-3">
                                 <label for="editDescription-${editCardId}" class="form-label">Description</label>
-                                <textarea class="form-control" id="editDescription-${editCardId}" rows="3" required>${card.querySelector('.col-lg-8 div').textContent}</textarea>
+                                <textarea class="form-control" id="editDescription-${editCardId}" rows="3" required>${convertLineBreaks(card.querySelector('.col-lg-8 div').textContent)}</textarea>
                             </div>
                             <button type="submit" class="btn btn-primary">Save Changes</button>
                             <button type="button" id="cancelEdit-${editCardId}" class="btn btn-secondary">Cancel</button>
@@ -223,7 +229,7 @@ document.addEventListener("DOMContentLoaded", function () {
                     card.querySelector('.text-primary').textContent = periodFormatted;
                     card.querySelector('.small.fw-bolder').textContent = role;
                     card.querySelector('.small.text-muted').textContent = company;
-                    card.querySelector('.col-lg-8 div').textContent = description;
+                    card.querySelector('.col-lg-8 div').innerHTML = convertLineBreaks(description);
                 })
                 .catch(error => console.error('Error:', error));
             });
