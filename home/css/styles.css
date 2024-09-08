@@ -583,10 +583,24 @@ progress {
 }
 
 .date-period {
-    display: block; /* 날짜를 블록 요소로 만들어 줄 바꿈을 허용 */
-    overflow: hidden; /* 넘치는 텍스트가 잘리도록 */
-    text-overflow: ellipsis; /* 넘치는 부분에 ... 표시 */
+  display: flex;
+  flex-wrap: wrap; /* 줄 바꿈을 허용 */
+  white-space: normal; /* 텍스트가 줄 바꿈되도록 설정 */
 }
+.card-body .row {
+    display: flex;
+    flex-wrap: wrap; /* 줄 바꿈을 허용 */
+}
+
+.card-body .col {
+    flex: 1; /* 공간을 균등하게 나누기 */
+    margin: 0; /* 불필요한 여백 제거 */
+}
+
+.card-body .text-primary {
+    overflow-wrap: break-word; /* 긴 단어가 카드 밖으로 넘치지 않도록 */
+}
+
 
 .display-1 {
   font-size: calc(1.625rem + 4.5vw);

@@ -11,7 +11,9 @@ document.addEventListener("DOMContentLoaded", function () {
         for (let i = currentIndex; i < endIndex; i++) {
             const experience = allExperienceData[i];
 
-            const experienceCard = ` 
+            const description = convertLineBreaks(experience.description);
+
+            const experienceCard = `
                 <div class="card shadow border-0 rounded-4 mb-5" data-id="${experience.ID}">
                     <div class="card-body p-5">
                         <div class="row align-items-center gx-5">
@@ -26,8 +28,8 @@ document.addEventListener("DOMContentLoaded", function () {
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-lg-8 text-primary">
-                                <div>${experience.description}</div>
+                            <div class="col-lg-8">
+                                <div>${description}</div>
                             </div>
                         </div>
                     </div>
