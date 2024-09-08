@@ -138,7 +138,6 @@ document.addEventListener("DOMContentLoaded", function () {
             const period = document.getElementById('period').value;
             const role = document.getElementById('role').value;
             const company = document.getElementById('company').value;
-            const location = document.getElementById('location').value;
             const description = document.getElementById('description').value;
 
             // 폼 데이터 서버에 전송
@@ -151,7 +150,6 @@ document.addEventListener("DOMContentLoaded", function () {
                     period,
                     role,
                     company,
-                    location,
                     description
                 })
             })
