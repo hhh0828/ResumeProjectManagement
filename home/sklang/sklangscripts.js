@@ -60,53 +60,66 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // 업로드 버튼 클릭 시 새로운 카드 열기
     document.getElementById('upload').addEventListener('click', function () {
-        const uniqueId = Date.now(); // 고유 ID 생성
-
+        const uniqueUploadId = `uploadCard-${Date.now()}`;
         const newCard = `
-            <div class="card shadow border-0 rounded-4 mb-5" id="newExperienceCard-${uniqueId}">
+            <div class="card shadow border-0 rounded-4 mb-5" id="${uniqueUploadId}">
                 <div class="card-body p-5">
                     <h3 class="fw-bolder mb-4">Add New Experience</h3>
-                    <form id="uploadForm-${uniqueId}">
+                    <form id="uploadForm-${uniqueUploadId}">
                         <div class="mb-3">
-                            <label for="period" class="form-label">Period</label>
-                            <input type="month" class="form-control" id="period-${uniqueId}" required>
+                            <label for="periodStart" class="form-label">Start Date</label>
+                            <input type="month" class="form-control" id="periodStart-${uniqueUploadId}" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="periodEnd" class="form-label">End Date</label>
+                            <input type="month" class="form-control" id="periodEnd-${uniqueUploadId}" required>
                         </div>
                         <div class="mb-3">
                             <label for="role" class="form-label">Role</label>
-                            <input type="text" class="form-control" id="role-${uniqueId}" required>
+                            <input type="text" class="form-control" id="role-${uniqueUploadId}" required>
                         </div>
                         <div class="mb-3">
                             <label for="company" class="form-label">Company</label>
-                            <input type="text" class="form-control" id="company-${uniqueId}" required>
+                            <input type="text" class="form-control" id="company-${uniqueUploadId}" required>
                         </div>
                         <div class="mb-3">
                             <label for="description" class="form-label">Description</label>
-                            <textarea class="form-control" id="description-${uniqueId}" rows="3" required></textarea>
+                            <textarea class="form-control" id="description-${uniqueUploadId}" rows="3" required></textarea>
                         </div>
                         <button type="submit" class="btn btn-primary">Submit</button>
-                        <button type="button" id="cancelUpload-${uniqueId}" class="btn btn-secondary">Cancel</button>
+                        <button type="button" id="cancelUpload-${uniqueUploadId}" class="btn btn-secondary">Cancel</button>
                     </form>
                 </div>
             </div>
         `;
-
-        experienceContainer.insertAdjacentHTML('beforeend', newCard);
-
-        document.getElementById(`uploadForm-${uniqueId}`).addEventListener('submit', function (event) {
+    
+        experienceContainer.insertAdjacentHTML('afterbegin', newCard); // 카드를 가장 위로 추가
+    
+        document.getElementById(`uploadForm-${uniqueUploadId}`).addEventListener('submit', function (event) {
             event.preventDefault(); // 폼 제출 기본 동작 방지
-
-            const period = document.getElementById(`period-${uniqueId}`).value;
-            const role = document.getElementById(`role-${uniqueId}`).value;
-            const company = document.getElementById(`company-${uniqueId}`).value;
-            const description = document.getElementById(`description-${uniqueId}`).value;
-
+    
+            const periodStart = document.getElementById(`periodStart-${uniqueUploadId}`).value;
+            const periodEnd = document.getElementById(`periodEnd-${uniqueUploadId}`).value;
+            const role = document.getElementById(`role-${uniqueUploadId}`).value;
+            const company = document.getElementById(`company-${uniqueUploadId}`).value;
+            const description = document.getElementById(`description-${uniqueUploadId}`).value;
+    
+            // YYYY-MM 형식으로 입력된 날짜를 년-월 형식으로 변환
+            const formatPeriod = (start, end) => {
+                const [startYear, startMonth] = start.split("-");
+                const [endYear, endMonth] = end.split("-");
+                return `${startYear}년 ${startMonth}월 ~ ${endYear}년 ${endMonth}월`;
+            };
+    
+            const periodFormatted = formatPeriod(periodStart, periodEnd);
+    
             fetch('/uploadresume', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify({
-                    period,
+                    period: periodFormatted,
                     role,
                     company,
                     description
@@ -115,13 +128,13 @@ document.addEventListener("DOMContentLoaded", function () {
             .then(response => response.json())
             .then(result => {
                 alert('Experience added successfully!');
-                document.getElementById(`newExperienceCard-${uniqueId}`).remove(); // 새 카드 제거
+                document.getElementById(uniqueUploadId).remove(); // 새 카드 제거
             })
             .catch(error => console.error('Error:', error));
         });
-
-        document.getElementById(`cancelUpload-${uniqueId}`).addEventListener('click', function () {
-            document.getElementById(`newExperienceCard-${uniqueId}`).remove(); // 새 카드 제거
+    
+        document.getElementById(`cancelUpload-${uniqueUploadId}`).addEventListener('click', function () {
+            document.getElementById(uniqueUploadId).remove(); // 새 카드 제거
         });
     });
 
