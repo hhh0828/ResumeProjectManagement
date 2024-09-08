@@ -17,7 +17,7 @@ func NewHandlers() *http.ServeMux {
 	mux.HandleFunc("/resumepage", ResumePage)
 	mux.HandleFunc("/returnskillang", Returnskillang)
 	mux.HandleFunc("/contactpage", Contactpage)
-	mux.HandleFunc("/uploadresume", UploadResume)
+	mux.HandleFunc("/uploadresume", UploadResumeExp)
 	mux.HandleFunc("/returnprojectone", Returnprojectone)
 	mux.HandleFunc("/editproject", Editproject)
 	mux.HandleFunc("/requestprojectedit", RequestProjectEdit)

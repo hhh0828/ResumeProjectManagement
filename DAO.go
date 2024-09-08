@@ -25,12 +25,11 @@ func (f *Feedback) Delete() {
 }
 
 type Experience struct {
-	ID          uint `gorm:"primaryKey"`
-	Period      int  // the days i spent during works.
-	Role        string
-	Company     string
-	Description string
-	ResumeID    uint
+	ID          uint   `gorm:"primaryKey"`
+	Period      int    `json:"period"` // the days i spent during works.
+	Role        string `json:"role"`
+	Company     string `json:"company"`
+	Description string `json:"descritpion"`
 }
 
 type Experiences struct {

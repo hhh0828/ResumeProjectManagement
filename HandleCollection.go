@@ -86,22 +86,18 @@ func UploadPage(w http.ResponseWriter, r *http.Request) {
 
 // getting object >> Exps, Skills, Langs
 // the request body must have the Pkey for updating the database properly.
-func UploadResume(w http.ResponseWriter, r *http.Request) {
+func UploadResumeExp(w http.ResponseWriter, r *http.Request) {
 	//DB conn Update
 	db := ConnectDB()
-	var resj ResumeJ
-	var exps Experiences
+	var exp Experience
 
-	json.NewDecoder(r.Body).Decode(&resj)
+	json.NewDecoder(r.Body).Decode(&exp)
 
 	//given data from FE
-	exps.Exps = resj.Experiences
+
+	db.Create(exp)
 
 	//the model i need to create are - Exps,
-	var dbmodelexps Experiences
-	var skillangexps Skillang
-	db.Model(&dbmodelexps).Updates(exps.Exps)
-	db.Model(&skillangexps)
 	//Comparing with previous data that user has requested.
 
 }
