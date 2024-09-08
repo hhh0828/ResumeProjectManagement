@@ -30,6 +30,10 @@ func main() {
 7-3. 업로드 및 DB 관련 추가 api 개발
 	0905 added > projectuploadpage added.
 	0905 added > deleteproject added
+	0906 added > ImageHandler api added
+	0906 added > fileserver has been migrated
+	0908 added > delete fileserver image when user delete the file from the page. save the volume !!!
+
 
 7-4. 리팩토링
 	0905 added > data base table interface upload feature implemented.
@@ -44,6 +48,18 @@ func main() {
 //10. Kubernetes & Jenkins,helm,Workload 정복
 //11. Kuber & prometheus 정복
 //12. AWS cloud
+
+파일 타입 별 업로드 구현 - interface 형태로 묶어서 진행 예정.
+현재 jpeg not being supported current - status
+
+PDF 제작 및 다운로드 구현 사진 토대로.. html 템플릿작성 and PDF 다운로드 구현.
+Resume Page 업로드 api 구현
+
+edit 페이지에서 사진 수정 기능 및 Longdescription에 사진 여러장 추가
+URL 구현
+
+image 안올리면 js 확인 후, 바이너리 data null 이면 app api 서버로 직행구현
+
 
 
 */

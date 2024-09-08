@@ -24,7 +24,7 @@ func NewHandlers() *http.ServeMux {
 	mux.HandleFunc("/projectuploadpage", Projectuploadpage)
 	mux.HandleFunc("/deleteproject", DeleteProject)
 	mux.HandleFunc("/imageurlsaverequest", ImageurlSaveRequest)
-
+	mux.HandleFunc("uploadproject", UploadProject)
 	//파일서버
 	staticFileServer := http.FileServer(http.Dir("./home"))
 	mux.Handle("/", http.StripPrefix("/", staticFileServer))

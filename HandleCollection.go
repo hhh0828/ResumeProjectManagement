@@ -1,6 +1,7 @@
 package main
 
 import (
+	"bytes"
 	"encoding/json"
 	"fmt"
 	"log"
@@ -182,6 +183,12 @@ func ImageurlSaveRequest(w http.ResponseWriter, r *http.Request) {
 	}
 
 	Upload(&project)
+	data, err := json.Marshal(project.Name + "has been uploaded Thank you sir!")
+	if err != nil {
+		log.Fatal("fatal error occured with your Data marshaling", err)
+	}
+	w.Header().Set("Content-Type", "application/json")
+	w.Write(data)
 }
 
 func DeleteProject(w http.ResponseWriter, r *http.Request) {
@@ -195,6 +202,16 @@ func DeleteProject(w http.ResponseWriter, r *http.Request) {
 	db := ConnectDB()
 	db.Delete(&Project{}, deprecateddata.ID)
 	fmt.Println("Project", deprecateddata.ID, "has been deleted")
+	//json 포맷으로바꾸공..
+	dataforimage, _ := json.Marshal(deprecateddata)
+	//바이트타입 버퍼로 만들어줌
+	newrequest, _ := http.NewRequest("POST", "http://172.17.0.4:8770/ImageDelete", bytes.NewBuffer(dataforimage))
+	if err != nil {
+		log.Println("something wrong with creating http request", err)
+	}
+	newrequest.Header.Set("Content-Type", "application/json")
+	clicon, _ := http.DefaultClient.Do(newrequest)
+	fmt.Println(clicon.StatusCode)
 
 	data, err := json.Marshal("your project has been removed")
 	if err != nil {

@@ -18,6 +18,7 @@ func AdjustingScale(img string, width uint, height uint) {
 	}
 	defer file.Close()
 
+	//check file type and if the file type is jpeg or jpg > switch the decode method ..... shit..///
 	// 이미지 디코딩
 	imges, _, err := image.Decode(file)
 	if err != nil {
