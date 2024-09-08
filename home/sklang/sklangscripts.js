@@ -147,8 +147,17 @@ document.addEventListener("DOMContentLoaded", function () {
             // 카드에서 기존 기간 데이터를 추출 (예: "2024년 12월 ~ 2025년 1월")
             const periodText = card.querySelector('.text-primary').textContent;
             const [startPeriod, endPeriod] = periodText.split(' ~ ').map(period => {
-                const [year, month] = period.split('년 ')[0].split(' ');
-                return `${year}-${month.replace('월', '').padStart(2, '0')}`; // YYYY-MM 형식으로 변환
+                const yearMonth = period.trim().split('년 ');
+                
+                if (yearMonth.length < 2) {
+                    console.error('Invalid period format:', period);
+                    return '';  // 잘못된 형식이면 빈 문자열 반환
+                }
+                
+                const year = yearMonth[0].trim();
+                const month = yearMonth[1].replace('월', '').trim().padStart(2, '0'); // '월'을 제거하고 앞에 0을 채움
+                
+                return `${year}-${month}`;
             });
     
             // 수정 카드 추가
