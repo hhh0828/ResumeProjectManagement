@@ -95,7 +95,7 @@ func UploadResumeExp(w http.ResponseWriter, r *http.Request) {
 
 	//given data from FE
 
-	db.Create(exp)
+	db.Create(&exp)
 
 	data, _ := json.Marshal("uploaded")
 	w.Header().Set("Content-Type", "application/json")
