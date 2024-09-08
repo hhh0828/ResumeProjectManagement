@@ -576,6 +576,13 @@ progress {
   font-weight: 300;
 }
 
+.card-body .text-primary {
+  white-space: nowrap; /* 날짜가 한 줄로 표시되도록 */
+  overflow: hidden; /* 텍스트가 카드 밖으로 넘치지 않도록 */
+  text-overflow: ellipsis; /* 넘치는 부분에 ... 표시 */
+}
+
+
 .display-1 {
   font-size: calc(1.625rem + 4.5vw);
   font-weight: 300;
