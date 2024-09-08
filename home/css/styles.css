@@ -577,11 +577,10 @@ progress {
 }
 
 .card-body .text-primary {
-  white-space: nowrap; /* 날짜가 한 줄로 표시되도록 */
-  overflow: hidden; /* 텍스트가 카드 밖으로 넘치지 않도록 */
-  text-overflow: ellipsis; /* 넘치는 부분에 ... 표시 */
+  white-space: normal; /* 텍스트가 줄 바꿈되도록 허용 */
+  word-break: break-word; /* 긴 단어가 카드 경계를 넘어가지 않도록 */
+  overflow-wrap: break-word; /* 텍스트가 카드 내부에서 잘리도록 */
 }
-
 
 .display-1 {
   font-size: calc(1.625rem + 4.5vw);
