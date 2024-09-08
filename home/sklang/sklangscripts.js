@@ -18,7 +18,7 @@ document.addEventListener("DOMContentLoaded", function () {
                             <div class="col text-center text-lg-start mb-4 mb-lg-0">
                                 <div class="bg-light p-4 rounded-4">
                                     <div class="date-container">
-                                        <div class="text-primary fw-bolder">${experience.period}</div>
+                                        <div class="text-primary fw-bolder date-period">${experience.period}</div>
                                     </div>
                                     <div class="text-container">
                                         <div class="small fw-bolder">${experience.role}</div>
@@ -26,7 +26,7 @@ document.addEventListener("DOMContentLoaded", function () {
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-lg-8">
+                            <div class="col-lg-8 text-primary">
                                 <div>${experience.description}</div>
                             </div>
                         </div>
