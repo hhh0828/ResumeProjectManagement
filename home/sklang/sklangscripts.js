@@ -63,14 +63,13 @@ document.addEventListener("DOMContentLoaded", function () {
                                 <div class="row align-items-center gx-5">
                                     <div class="col text-center text-lg-start mb-4 mb-lg-0">
                                         <div class="bg-light p-4 rounded-4">
-                                            <div class="text-primary fw-bolder mb-2">${experience.Period}</div>
-                                            <div class="small fw-bolder">${experience.Role}</div>
-                                            <div class="small text-muted">${experience.Company}</div>
-                                            <div class="small text-muted">${experience.Location}</div>
+                                            <div class="text-primary fw-bolder mb-2">${experience.period}</div>
+                                            <div class="small fw-bolder">${experience.role}</div>
+                                            <div class="small text-muted">${experience.company}</div>
                                         </div>
                                     </div>
                                     <div class="col-lg-8">
-                                        <div>${experience.Description}</div>
+                                        <div>${experience.description}</div>
                                     </div>
                                 </div>
                             </div>
