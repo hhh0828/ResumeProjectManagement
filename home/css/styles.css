@@ -334,6 +334,41 @@ a > code {
 }
 
 
+@media (max-width: 768px) {
+  .project-card {
+      flex-direction: column; /* 모바일에서는 세로 배치 */
+      align-items: flex-start; /* 이미지와 텍스트가 세로로 */
+  }
+
+  .image-container {
+      width: 100%; /* 화면 가로폭을 다 차지하도록 */
+      height: auto; /* 높이는 자동으로 맞춤 */
+  }
+
+  .project-image {
+      width: 100%; /* 이미지가 화면을 다 차지하게 함 */
+      height: auto;
+  }
+
+  .text-content {
+      padding: 1rem; /* 모바일에서는 텍스트의 여백을 줄여서 보기 편하게 */
+  }
+}
+
+/* 4K 해상도에서 적절한 스케일을 유지 */
+@media (min-width: 1920px) {
+  .image-container {
+      width: 400px;
+      height: 533px; /* 4:3 비율을 유지하면서 조금 더 큰 이미지 */
+  }
+
+  .text-content {
+      padding: 3rem; /* 고해상도에서는 패딩을 더 많이 줘서 여유 공간을 활용 */
+  }
+}
+
+
+
 
 
 
