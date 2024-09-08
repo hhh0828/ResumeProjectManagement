@@ -585,9 +585,9 @@ progress {
 }
 .date-container {
   white-space: nowrap; /* 줄바꿈 방지 */
-  width: 190px; /* 원하는 너비를 적절히 설정합니다 */
+  width: 150px; /* 원하는 너비를 적절히 설정합니다 */
   overflow: hidden; /* 넘치는 텍스트가 보이지 않게 합니다 */
-  text-overflow: ellipsis; /* 넘치는 텍스트가 생략(...)으로 표시되게 합니다 */
+
 }
 .card-body .row {
   display: flex;
