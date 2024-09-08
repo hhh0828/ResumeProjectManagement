@@ -73,6 +73,13 @@ document.addEventListener("DOMContentLoaded", function () {
                                     </div>
                                 </div>
                             </div>
+                        <div>
+                <button class="btn btn-light position-absolute top-0 start-0 m-2 p-1 edit-button" 
+                style="border-radius: 50%; z-index: 10;"
+                data-id="${project.ID}">
+                <i class="bi bi-pencil"></i>
+                </button>
+                </div>
                         </div>
                     `;
 
