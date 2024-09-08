@@ -111,18 +111,16 @@ func ReturnResume(w http.ResponseWriter, r *http.Request) {
 	//Object
 	db := ConnectDB()
 
+	var experience []Experience
+	//wrapping to EXP slice
 	var Exps Experiences
 
-	for i := 1; i < 4; i++ {
-		origind := new(Experience) //trash --
-		db.First(&origind, i)
-		Exps.Exps = append(Exps.Exps, *origind)
-	}
+	db.Find(&experience)
+	Exps.Exps = experience
 
 	sendingdata, err := json.Marshal(Exps)
-
 	if err != nil {
-		log.Fatal("yes")
+		log.Fatal("error occured with DB EXP", err)
 	}
 	w.Header().Set("Content-Type", "application/json")
 	w.Write(sendingdata)
