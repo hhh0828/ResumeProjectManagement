@@ -143,57 +143,76 @@ document.addEventListener("DOMContentLoaded", function () {
         if (event.target.closest('.edit-button')) {
             const card = event.target.closest('.card');
             const cardId = card.getAttribute('data-id');
-            const uniqueEditId = Date.now(); // 고유 ID 생성
-
-            // 카드에 수정 폼 추가
+    
+            // 카드에서 기존 기간 데이터를 추출 (예: "2024년 12월 ~ 2025년 1월")
+            const periodText = card.querySelector('.text-primary').textContent;
+            const [startPeriod, endPeriod] = periodText.split(' ~ ').map(period => {
+                const [year, month] = period.split('년 ')[0].split(' ');
+                return `${year}-${month.replace('월', '').padStart(2, '0')}`; // YYYY-MM 형식으로 변환
+            });
+    
+            // 수정 카드 추가
+            const editCardId = `editCard-${Date.now()}`;
             const editCard = `
-                <div class="card shadow border-0 rounded-4 mb-5" id="editExperienceCard-${uniqueEditId}">
+                <div class="card shadow border-0 rounded-4 mb-5" id="${editCardId}">
                     <div class="card-body p-5">
                         <h3 class="fw-bolder mb-4">Edit Experience</h3>
-                        <form id="editForm-${uniqueEditId}">
-                            <input type="hidden" id="editId-${uniqueEditId}" value="${cardId}">
+                        <form id="editForm-${editCardId}">
+                            <input type="hidden" id="editId" value="${cardId}">
                             <div class="mb-3">
-                                <label for="editPeriod-${uniqueEditId}" class="form-label">Period</label>
-                                <input type="month" class="form-control" id="editPeriod-${uniqueEditId}" value="${card.querySelector('.text-primary').textContent}" required>
+                                <label for="editPeriodStart-${editCardId}" class="form-label">Start Date</label>
+                                <input type="month" class="form-control" id="editPeriodStart-${editCardId}" value="${startPeriod}" required>
                             </div>
                             <div class="mb-3">
-                                <label for="editRole-${uniqueEditId}" class="form-label">Role</label>
-                                <input type="text" class="form-control" id="editRole-${uniqueEditId}" value="${card.querySelector('.small.fw-bolder').textContent}" required>
+                                <label for="editPeriodEnd-${editCardId}" class="form-label">End Date</label>
+                                <input type="month" class="form-control" id="editPeriodEnd-${editCardId}" value="${endPeriod}" required>
                             </div>
                             <div class="mb-3">
-                                <label for="editCompany-${uniqueEditId}" class="form-label">Company</label>
-                                <input type="text" class="form-control" id="editCompany-${uniqueEditId}" value="${card.querySelector('.small.text-muted').textContent}" required>
+                                <label for="editRole-${editCardId}" class="form-label">Role</label>
+                                <input type="text" class="form-control" id="editRole-${editCardId}" value="${card.querySelector('.small.fw-bolder').textContent}" required>
                             </div>
                             <div class="mb-3">
-                                <label for="editDescription-${uniqueEditId}" class="form-label">Description</label>
-                                <textarea class="form-control" id="editDescription-${uniqueEditId}" rows="3" required>${card.querySelector('.col-lg-8 div').textContent}</textarea>
+                                <label for="editCompany-${editCardId}" class="form-label">Company</label>
+                                <input type="text" class="form-control" id="editCompany-${editCardId}" value="${card.querySelector('.small.text-muted').textContent}" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="editDescription-${editCardId}" class="form-label">Description</label>
+                                <textarea class="form-control" id="editDescription-${editCardId}" rows="3" required>${card.querySelector('.col-lg-8 div').textContent}</textarea>
                             </div>
                             <button type="submit" class="btn btn-primary">Save Changes</button>
-                            <button type="button" id="cancelEdit-${uniqueEditId}" class="btn btn-secondary">Cancel</button>
+                            <button type="button" id="cancelEdit-${editCardId}" class="btn btn-secondary">Cancel</button>
                         </form>
                     </div>
                 </div>
             `;
-
+    
             card.insertAdjacentHTML('beforeend', editCard);
-
-            document.getElementById(`editForm-${uniqueEditId}`).addEventListener('submit', function (event) {
+    
+            document.getElementById(`editForm-${editCardId}`).addEventListener('submit', function (event) {
                 event.preventDefault(); // 폼 제출 기본 동작 방지
-
-                const period = document.getElementById(`editPeriod-${uniqueEditId}`).value;
-                const role = document.getElementById(`editRole-${uniqueEditId}`).value;
-                const company = document.getElementById(`editCompany-${uniqueEditId}`).value;
-                const description = document.getElementById(`editDescription-${uniqueEditId}`).value;
-                const editId = document.getElementById(`editId-${uniqueEditId}`).value;
-
+    
+                const periodStart = document.getElementById(`editPeriodStart-${editCardId}`).value;
+                const periodEnd = document.getElementById(`editPeriodEnd-${editCardId}`).value;
+                const role = document.getElementById(`editRole-${editCardId}`).value;
+                const company = document.getElementById(`editCompany-${editCardId}`).value;
+                const description = document.getElementById(`editDescription-${editCardId}`).value;
+    
+                const formatPeriod = (start, end) => {
+                    const [startYear, startMonth] = start.split("-");
+                    const [endYear, endMonth] = end.split("-");
+                    return `${startYear}년 ${startMonth}월 ~ ${endYear}년 ${endMonth}월`;
+                };
+    
+                const periodFormatted = formatPeriod(periodStart, periodEnd);
+    
                 fetch('/editresume', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
                     },
                     body: JSON.stringify({
-                        id: editId,
-                        period,
+                        id: cardId,
+                        period: periodFormatted,
                         role,
                         company,
                         description
@@ -202,23 +221,18 @@ document.addEventListener("DOMContentLoaded", function () {
                 .then(response => response.json())
                 .then(result => {
                     alert('Experience updated successfully!');
-
-                    // UI 업데이트 (카드 내용 수정)
-                    const cardToUpdate = document.querySelector(`[data-id="${editId}"]`);
-                    cardToUpdate.querySelector('.text-primary').textContent = period;
-                    cardToUpdate.querySelector('.small.fw-bolder').textContent = role;
-                    cardToUpdate.querySelector('.small.text-muted').textContent = company;
-                    cardToUpdate.querySelector('.col-lg-8 div').textContent = description;
-
-                    // 수정 폼 제거
-                    document.getElementById(`editExperienceCard-${uniqueEditId}`).remove();
+                    document.getElementById(editCardId).remove(); // 수정 카드 제거
+                    // 여기에서 기존 카드 내용 업데이트 필요 (예: 카드의 기간, 역할, 회사 정보)
+                    card.querySelector('.text-primary').textContent = periodFormatted;
+                    card.querySelector('.small.fw-bolder').textContent = role;
+                    card.querySelector('.small.text-muted').textContent = company;
+                    card.querySelector('.col-lg-8 div').textContent = description;
                 })
-                .catch(error => console.error('Error updating experience:', error));
+                .catch(error => console.error('Error:', error));
             });
-
-            // 수정 취소 버튼 처리
-            document.getElementById(`cancelEdit-${uniqueEditId}`).addEventListener('click', function () {
-                document.getElementById(`editExperienceCard-${uniqueEditId}`).remove(); // 수정 폼 제거
+    
+            document.getElementById(`cancelEdit-${editCardId}`).addEventListener('click', function () {
+                document.getElementById(editCardId).remove(); // 수정 카드 제거
             });
         }
     });
