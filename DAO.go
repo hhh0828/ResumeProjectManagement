@@ -29,7 +29,7 @@ type Experience struct {
 	Period      int    `json:"period"` // the days i spent during works.
 	Role        string `json:"role"`
 	Company     string `json:"company"`
-	Description string `json:"descritpion"`
+	Description string `json:"description"`
 }
 
 type Experiences struct {
