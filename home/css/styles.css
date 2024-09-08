@@ -583,7 +583,12 @@ progress {
   flex-wrap: wrap; /* 줄 바꿈을 허용 */
   white-space: normal; /* 텍스트가 줄 바꿈되도록 설정 */
 }
-
+.date-container {
+  white-space: nowrap; /* 줄바꿈 방지 */
+  width: 300px; /* 원하는 너비를 적절히 설정합니다 */
+  overflow: hidden; /* 넘치는 텍스트가 보이지 않게 합니다 */
+  text-overflow: ellipsis; /* 넘치는 텍스트가 생략(...)으로 표시되게 합니다 */
+}
 .card-body .row {
   display: flex;
   flex-wrap: wrap; /* 줄 바꿈을 허용 */
