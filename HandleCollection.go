@@ -98,6 +98,7 @@ func UploadResumeExp(w http.ResponseWriter, r *http.Request) {
 	db.Create(exp)
 
 	data, _ := json.Marshal("uploaded")
+	w.Header().Set("Content-Type", "application/json")
 	w.Write(data)
 	//the model i need to create are - Exps,
 	//Comparing with previous data that user has requested.
