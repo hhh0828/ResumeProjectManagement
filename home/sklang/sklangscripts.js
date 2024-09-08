@@ -12,8 +12,7 @@ document.addEventListener("DOMContentLoaded", function () {
             const experience = allExperienceData[i];
 
             const description = convertLineBreaks(experience.description);
-
-            const experienceCard = `
+            const experienceCard = ` 
                 <div class="card shadow border-0 rounded-4 mb-5" data-id="${experience.ID}">
                     <div class="card-body p-5">
                         <div class="row align-items-center gx-5">
@@ -29,7 +28,7 @@ document.addEventListener("DOMContentLoaded", function () {
                                 </div>
                             </div>
                             <div class="col-lg-8">
-                                <div>${description}</div>
+                                <div>${experience.description}</div>
                             </div>
                         </div>
                     </div>
