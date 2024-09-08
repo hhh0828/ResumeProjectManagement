@@ -1,4 +1,43 @@
 document.addEventListener("DOMContentLoaded", function () {
+    // 서버에서 스킬 및 언어 데이터를 가져옴
+    fetch('/returnskillang')
+        .then(response => response.json())
+        .then(data => {
+            const skills = data.skills;
+            const container = document.getElementById('skillsContainer');
+            const languages = data.languages;
+            const containerlang = document.getElementById('languagesContainer');   
+
+            if (container) {
+                skills.forEach(skill => {
+                    const skillDiv = document.createElement('div');
+                    skillDiv.className = 'col mb-4 mb-md-0';
+                    skillDiv.innerHTML = `
+                        <div class="d-flex align-items-center bg-light rounded-4 p-3 h-100">
+                            ${skill}
+                        </div>
+                    `;
+                    container.appendChild(skillDiv);
+                });
+            }
+
+            if (containerlang) {
+                languages.forEach(language => {
+                    const languageDiv = document.createElement('div');
+                    languageDiv.className = 'col mb-4 mb-md-0';
+                    languageDiv.innerHTML = `
+                        <div class="d-flex align-items-center bg-light rounded-4 p-3 h-100">
+                            ${language}
+                        </div>
+                    `;
+                    containerlang.appendChild(languageDiv);
+                });
+            }
+        })
+        .catch(error => console.error('Error fetching data:', error));
+})
+
+document.addEventListener("DOMContentLoaded", function () {
     let allExperienceData = [];
     let currentIndex = 0;
     const experienceContainer = document.getElementById('experienceContainer');
