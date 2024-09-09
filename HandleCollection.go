@@ -268,7 +268,10 @@ func Returnprojectone(w http.ResponseWriter, r *http.Request) {
 
 func ReturnProject(w http.ResponseWriter, r *http.Request) {
 
-	fmt.Println("a user accessed to ReturnProject, the IP address is :", r.RemoteAddr)
+	if forwarded := r.Header.Get("X-Forwarded-For"); forwarded != "" {
+		fmt.Println(forwarded, "this user has accessed to your server")
+	}
+	//fmt.Println("a user accessed to ReturnProject, the IP address is :", r.RemoteAddr)
 	/*func() {
 		not impletemented yet. need to write the logs that user accessed to your site.
 		and see your project.
