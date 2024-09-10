@@ -8,6 +8,12 @@ import (
 	"time"
 )
 
+//feedback
+
+//목표 일차적으로 모든 요청을 캐시에 담도록 요청한다.
+//api에서 복잡한 로직이 구성되어있을경우 서버내 부하를 줄이기위해, key와 value를 모두 저장한다.
+//인터페이스를 사용하여 모든 요청에 대한 key와 value를 저장한다. 대량의 데이터 또는 배열형태로 된 형태도 목표로...
+
 // 케시 데이터 저장
 type storeCache struct {
 	sync.RWMutex
@@ -50,25 +56,29 @@ func SaveCache(w http.ResponseWriter, r *http.Request) {
 		}
 	*/
 	Cachemem.Lock()
+	defer Cachemem.Unlock()
 	Cachemem.data[keyvalueset.MyKey] = &Cachedvalue{
 		CacheValue: keyvalueset.MyValue,
 		Createdat:  time.Now(),
 	}
 	DeleteCache()
-	Cachemem.Unlock()
+
 }
 
 func DeleteCache() {
+	Cachemem.Lock()
+	defer Cachemem.Unlock()
 	for Mykey, MyValue := range Cachemem.data {
-		Cachemem.Lock()
+
 		if time.Since(MyValue.Createdat) > 15*time.Minute {
 			delete(Cachemem.data, Mykey)
 		}
-		Cachemem.Unlock()
+
 	}
 }
 
 func RetriveCache(w http.ResponseWriter, r *http.Request) {
+	// get으로 받을거면 key := r.URL.Path[len(https://hyunhoworld.site/cache):]
 
 	var cachedkey CachedKey
 	err := json.NewDecoder(r.Body).Decode(&cachedkey)
@@ -76,14 +86,24 @@ func RetriveCache(w http.ResponseWriter, r *http.Request) {
 		fmt.Println("error with decoding the Cachedata request", err)
 	}
 
-	var response string
+	var response *Cachedvalue
 	//check cached data
-	for savedkey, values := range Cachemem.data {
-		if savedkey == cachedkey.MyKey {
-			response = values.CacheValue
+	/*
+		for savedkey, values := range Cachemem.data {
+			if savedkey == cachedkey.MyKey {
+				response = values.CacheValue
+			}
 		}
+	*/
+
+	response, exists := Cachemem.data[cachedkey.MyKey]
+	if !exists {
+		http.Error(w, "Key not found", http.StatusNotFound)
+		return
 	}
-	JsonCreator("cachedvalue", response)
-	json.NewEncoder(w).Encode(response)
+
+	jsondata := JsonCreator("cachedvalue", response.CacheValue)
+	w.Header().Set("Content-Type", "application/json")
+	json.NewEncoder(w).Encode(jsondata)
 
 }
