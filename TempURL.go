@@ -78,9 +78,11 @@ func ShortenURL(w http.ResponseWriter, r *http.Request) {
 
 	*/
 	for shortURL, data := range store.urls {
+		store.Lock()
 		if time.Since(data.Createdat) > 15*time.Minute {
 			delete(store.urls, shortURL)
 		}
+		store.Unlock()
 	}
 	store.Unlock()
 
