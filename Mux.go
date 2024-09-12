@@ -7,6 +7,9 @@ import (
 
 func NewHandlers() *http.ServeMux {
 	mux := http.NewServeMux()
+	//HandlerFunc의 역할...
+	//serveHTTP를 반환하는 Handler로 바꿔줌 Handlefunc을
+	mux.Handle("/updateres", authMiddleware(http.HandlerFunc(UpdateResume)))
 	//mux.HandleFunc("/", Indexhandler)
 	mux.HandleFunc("/download", PrintPDF)
 	mux.HandleFunc("/returnresume", ReturnResume)
@@ -33,3 +36,4 @@ func NewHandlers() *http.ServeMux {
 
 	return mux
 }
+
