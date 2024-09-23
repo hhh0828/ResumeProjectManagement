@@ -29,6 +29,10 @@
                 <label for="projectImage" class="form-label">Project Image</label>
                 <input class="form-control" type="file" id="projectImage" name="projectImage" />
             </div>
+            <div class="mb-3">
+                <label for="projectURL" class="form-label">Project URL</label>
+                <input type="url" class="form-control" id="projectURL" name="projectURL" placeholder="https://example.com" />
+            </div>
             <button type="submit" class="btn btn-primary">Save Changes</button>
         </form>
     </div>
@@ -52,6 +56,7 @@
                 ImageData.append('name', document.getElementById('projectName').value)
                 ImageData.append('shortdesc', document.getElementById('projectDescription').value)
                 ImageData.append('longdesc', document.getElementById('DescriptionDetail').value)
+                ImageData.append('detailurl', document.getElementById('projectURL').value)
 
                 fetch('https://www.hyunhoworld.site/files/imageupload', {
                  method: 'POST',
