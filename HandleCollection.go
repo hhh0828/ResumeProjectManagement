@@ -141,7 +141,9 @@ func RequestProjectEdit(w http.ResponseWriter, r *http.Request) {
 	modelproject.Name = project.Name
 	modelproject.ShortDesc = project.ShortDesc
 	modelproject.LongDesc = project.LongDesc
+	modelproject.DetailUrl = project.DetailUrl
 	db.Save(&modelproject)
+	fmt.Println("is this working ? ", modelproject.DetailUrl)
 
 	thanks := project.Name + "에 대한 편집이 완료되었습니다."
 	data, _ := json.Marshal(thanks)
