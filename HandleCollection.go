@@ -234,7 +234,6 @@ func SendingFeedback(w http.ResponseWriter, r *http.Request) {
 	data, _ := json.Marshal(feedback.Name)
 	w.Header().Set("Content-Type", "application/json")
 	w.Write(data)
-	NewHandlers().ServeHTTP()
 }
 
 type Projectarray struct {
