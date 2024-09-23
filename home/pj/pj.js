@@ -75,12 +75,12 @@ document.addEventListener('DOMContentLoaded', function() {
             const projectId = button.getAttribute('data-id'); // data-id를 가져옵니다.
             console.log('Project ID:', projectId); // 디버깅용으로 콘솔에 ID를 출력합니다.
             
-            //loggeduser = document.getElementById('permissiongiven')
-            //if (loggeduser == 'webmaster'){
+            loggeduser = document.getElementById('permissiongiven')
+            if (loggeduser == 'webmaster'){
             window.location.href = `/editproject?id=${projectId}`; // 수정 페이지로 이동합니다.
-            //}else {
-            //    alert("Sorry, No permission given")
-            //}
+            }else {
+                alert("Sorry, No permission given")
+            }
             
         }
     });
