@@ -11,8 +11,6 @@ import (
 	"time"
 )
 
-//JWT 완벽히 이해할떄까지.
-
 type Jheader struct {
 	Alg string `json:"alg"`
 	Typ string `json:"typ"`
