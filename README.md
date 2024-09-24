@@ -23,7 +23,7 @@ Prometheus, Jenkins CICD workload, helm package
 
 Feedback 기반 개선 사항 개발 9월 15일 - no feedback received  :( 
 업로드 및 DB관련 추가 API 개발 9월 10일 - 완
-- ERD 및 시스템 설계도 9월 15일 - 미완
+- ERD 및 시스템 설계도 9월 15일 - 미완 계획 미정
 
 
 9월6일 업데이트 - 사진 업로드 기능 추가 파일서버 구현 및 Nginx X fileserveer location 추가 
@@ -31,3 +31,13 @@ Feedback 기반 개선 사항 개발 9월 15일 - no feedback received  :(
 
 
 어플리케이션을 하이퍼 V 또는 로컬 환경에서 구동하기위한 도커 및 쿠버네티스 매니페스트파일, GO 언어로 이루어진 기본적인 웹 API 구성을 작성하였습니다.
+
+
+Test env implemented.
+
+회원가입 로그인 초안 구현 - 9월23일 완료 
+JWT 구현,Token provisioning-  token issuing, validating 구현 - 9월 24일 완료
+authmidware 구현 -  and providing validating - 9월 25일 백엔드 서버 업그레이드 예정 
+
+목적 : 게시글 수정 권한 차등화
+
