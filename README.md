@@ -37,7 +37,11 @@ Test env implemented.
 
 회원가입 로그인 초안 구현 - 9월23일 완료 
 JWT 구현,Token provisioning-  token issuing, validating 구현 - 9월 24일 완료
-authmidware 구현 -  and providing validating - 9월 25일 백엔드 서버 업그레이드 예정 
+authmidware 구현 -  and providing validating - 9월 25일 백엔드 서버 업그레이드 완료.
+미들웨어 구현 완료, 토큰 Issuing and Validating. 
+
+9월 27일 - 로그인 테스트 환경 구축...
+
 
 목적 : 게시글 수정 권한 차등화
 

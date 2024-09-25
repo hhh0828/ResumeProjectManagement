@@ -11,7 +11,9 @@ func NewHandlers() *http.ServeMux {
 	//serveHTTP를 반환하는 Handler로 바꿔줌 Handlefunc을
 	//mux.Handle("/updateres", authMiddleware(http.HandlerFunc(UpdateResume)))
 	//mux.HandleFunc("/", Indexhandler)
+	//testmodel - authmiddelware - need to have new env for testing the code below.
 	mux.HandleFunc("/returnresume", Authmiddelware(Editproject))
+
 	mux.HandleFunc("/download", PrintPDF)
 	mux.HandleFunc("/returnresume", ReturnResume)
 	mux.HandleFunc("/updateresume", UpdateResume)
