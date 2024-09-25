@@ -7,6 +7,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"log"
+	"net/http"
 	"strings"
 	"time"
 )
@@ -87,7 +88,7 @@ func CreateHmac(data string, secret string) string {
 	return a
 }
 
-func ValidateToken(receivedjwt string) {
+func ValidateToken(receivedjwt string) bool {
 	separatedjwt := strings.Split(receivedjwt, ".")
 
 	header := separatedjwt[0]
@@ -99,24 +100,53 @@ func ValidateToken(receivedjwt string) {
 	fmt.Println(expectedsignature, "this is expected")
 	fmt.Println(receivedsignature, "this is received one")
 
-	if receivedsignature == expectedsignature {
-		fmt.Println("the token validated")
-	} else {
-		fmt.Println("dead token")
-	}
-
 	//check exp time
 	payloadbyte, _ := base64.RawURLEncoding.DecodeString(payload)
 	var payloadi JPayload
 	json.Unmarshal(payloadbyte, &payloadi)
 
-	if int64(payloadi.Exp.Unix()) > time.Now().Unix() {
-		fmt.Println("time ok")
+	if int64(payloadi.Exp.Unix()) > time.Now().Unix() && (receivedsignature == expectedsignature) {
+		fmt.Println("time ok", "expected token validated")
+		return true
 	} else {
-		fmt.Println("time over")
+		fmt.Println("time over or dead token")
+		return false
 	}
+
 }
+
+type handlerfunc func(w http.ResponseWriter, r *http.Request)
 
 //Unix ?
 
-//시간 비교
+// 시간 비교
+func Authmiddelware(next func(w http.ResponseWriter, r *http.Request)) handlerfunc {
+	return func(w http.ResponseWriter, r *http.Request) {
+		cookie, err := r.Cookie("token")
+		if err != nil {
+			http.Error(w, "Unauthorized", http.StatusUnauthorized)
+			log.Println(err, "error occurred while getting a cookie")
+			return
+		}
+		if ValidateToken(cookie.Value) {
+			w.Header().Set("Content-Type", "application/json")
+			var mess Message
+			a, _ := mess.Messagesetter(200, "Token has been validated")
+			json.NewEncoder(w).Encode(a)
+			next(w, r)
+		} else {
+			w.WriteHeader(401)
+			return
+		}
+
+	}
+}
+
+func NewCookie(tk string) *http.Cookie {
+	a := &http.Cookie{
+		Name:     "token",
+		Value:    tk,
+		HttpOnly: true,
+	}
+	return a
+}
