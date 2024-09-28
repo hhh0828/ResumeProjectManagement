@@ -28,6 +28,7 @@ func TestMain(t *testing.T) {
 	ValidateToken(tk)
 }
 
+//std test run
 func Test(t *testing.T) {
 	feedback := &Feedback{
 		Name:    "hyun",

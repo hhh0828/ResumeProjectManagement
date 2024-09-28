@@ -4,7 +4,7 @@ go 1.22.4
 
 require gorm.io/driver/postgres v1.5.9
 
-require github.com/dgrijalva/jwt-go v3.2.0+incompatible // indirect
+require welcome/hyunho/myapp v0.0.0-00010101000000-000000000000 // indirect
 
 require (
 	github.com/jackc/pgpassfile v1.0.0 // indirect
@@ -17,5 +17,10 @@ require (
 	golang.org/x/crypto v0.17.0 // indirect
 	golang.org/x/sync v0.8.0 // indirect
 	golang.org/x/text v0.17.0 // indirect
-	gorm.io/gorm v1.25.11 // indirect
+	gorm.io/gorm v1.25.11
+
 )
+
+replace p.com/test => ./1
+
+replace welcome/hyunho/myapp => ./3
