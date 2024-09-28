@@ -1,6 +1,5 @@
-package myapp
+package mathshyunho
 
-//themin
 func Themin(a, b int) int {
 	if a > b {
 		return b
