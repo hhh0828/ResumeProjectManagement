@@ -1,4 +1,4 @@
-package mathsss
+package mathshy
 
 func Themin(a, b int) int {
 	if a > b {
