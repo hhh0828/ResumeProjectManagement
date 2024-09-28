@@ -1,10 +1,8 @@
-module Project/ResumeManagement
+module github.com/hhh0828/ResumeProjectManagement
 
 go 1.22.4
 
 require gorm.io/driver/postgres v1.5.9
-
-require welcome/hyunho/myapp v0.0.0-00010101000000-000000000000 // indirect
 
 require (
 	github.com/jackc/pgpassfile v1.0.0 // indirect

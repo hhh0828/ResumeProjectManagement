@@ -22,4 +22,5 @@ func main() {
 
 	ab := mypackage.Fibt(35)
 	fmt.Println(ab)
+	fmt.Scan()
 }
