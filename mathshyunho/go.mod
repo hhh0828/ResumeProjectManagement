@@ -1,3 +1,3 @@
-module github.com/hhh0828/ResumeProjectManagement/mathshyunho
+module mathsss
 
 go 1.22.4
