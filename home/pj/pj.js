@@ -61,7 +61,7 @@ document.addEventListener("DOMContentLoaded", function () {
             loadMoreButton.style.display = 'none';
         }
     }
-
+s
     // "더보기" 버튼 클릭 이벤트
     loadMoreButton.addEventListener('click', function () {
         displayProjects(); // 버튼 클릭 시 추가 프로젝트 로드
@@ -74,7 +74,7 @@ document.addEventListener('DOMContentLoaded', function() {
         if (button) {
             const projectId = button.getAttribute('data-id'); // data-id를 가져옵니다.
             console.log('Project ID:', projectId); // 디버깅용으로 콘솔에 ID를 출력합니다.
-            window.location.href = `/editproject?id=${projectId}`; // 수정 페이지로 이동합니다.
+            window.location.href = `/editproject?id=${projectId}`; // 수정 페이지로 이동합니다.t
         }
     });
 });
