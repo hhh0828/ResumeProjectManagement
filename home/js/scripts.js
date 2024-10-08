@@ -62,8 +62,8 @@ document.addEventListener("DOMContentLoaded", function() {
 
     // jwt 값이 "logged-out"이거나 없으면 로그인 버튼, 그 외에는 로그아웃 버튼
     const LogInOutCard = (jwt === 'logged-out' || !jwt)
-        ? `<li class="nav-item"><a class="nav-link" id="LogInOut" href="loginpage">Login</a></li>`
-        : `<li class="nav-item"><a class="nav-link" id="LogInOut" href="/logout">Logout</a></li>`;
+        ? `<li class="nav-item"><a class="nav-link" id="LogInOut" href="/logout">Logout</a></li>`
+        : `<li class="nav-item"><a class="nav-link" id="LogInOut" href="loginpage">Login</a></li>`;
 
     LogContainer.insertAdjacentHTML('beforeend', LogInOutCard);
 });
