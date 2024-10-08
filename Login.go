@@ -71,7 +71,11 @@ func LoginRequest(w http.ResponseWriter, r *http.Request) {
 		w.Header().Set("Content-Type", "application/json")
 		a := NewCookie(GenerateToken(Jheader{Alg: "HS256", Typ: "JWT"}, JPayload{Userid: loguser.Userid, LoggedinAs: loguser.GivenPermission, Exp: time.Now().Add(15 * time.Minute)}))
 		http.SetCookie(w, a)
-		w.Write([]byte(loguser.GivenPermission))
+		response, err := json.Marshal(loguser.GivenPermission)
+		if err != nil {
+			log.Println("marshaling error", err)
+		}
+		w.Write(response)
 	} else {
 		a, err := json.Marshal(&Message{Status: 200, MessagefromMaster: "A Yo You need to input correct password"})
 		if err != nil {
