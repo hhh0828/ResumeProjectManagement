@@ -61,7 +61,6 @@ document.addEventListener("DOMContentLoaded", function () {
             loadMoreButton.style.display = 'none';
         }
     }
-s
     // "더보기" 버튼 클릭 이벤트
     loadMoreButton.addEventListener('click', function () {
         displayProjects(); // 버튼 클릭 시 추가 프로젝트 로드
