@@ -40,7 +40,7 @@ func NewHandlers() *http.ServeMux {
 	mux.HandleFunc("/uploadproject", UploadProject)
 
 	//User and Login.
-	mux.HandleFunc("/login", LoginRequest)
+	mux.HandleFunc("/requestlogin", LoginRequest)
 	mux.HandleFunc("/joinus", JoinasMember)
 
 	//Static Fileserver - Css / JS push

@@ -54,7 +54,7 @@ document.getElementById('contactForm').addEventListener('submit', function(event
 
 document.addEventListener("DOMContentLoaded", function() {
 
-    
+    alert(document.cookie)
 
 const LogInOutCard = `
                <li class="nav-item"><a class="nav-link" id="LogInOut" href="loginpage">Login</a></li>

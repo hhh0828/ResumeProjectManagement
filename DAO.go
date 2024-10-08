@@ -94,7 +94,7 @@ func ConnectDB() *gorm.DB {
 		log.Println("error occrued with : ", err)
 	}
 
-	db.AutoMigrate(&Feedback{}, &Experience{}, &Skill{}, &Languages{}, &Project{})
+	db.AutoMigrate(&Feedback{}, &Experience{}, &Skill{}, &Languages{}, &Project{}, &User{})
 
 	return db
 }
