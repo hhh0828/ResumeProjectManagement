@@ -52,12 +52,7 @@ document.getElementById('contactForm').addEventListener('submit', function(event
 //브라우저 쿠키를 가지고있으면 // logout page로 보이게 설정
 //브라우저 쿠키를 가지고있지 않으면 login page로 보이게 설정
 document.addEventListener("DOMContentLoaded", function() {
-    const getCookieValue = (name) => {
-        const value = `; ${document.cookie}`;
-        const parts = value.split(`; ${name}=`);
-        if (parts.length === 2) return parts.pop().split(';').shift();
-    };
-
+  
     const jwt = getCookieValue('token'); // JWT 쿠키 확인
 
     // jwt 값이 "logged-out"이거나 없으면 로그인 버튼, 그 외에는 로그아웃 버튼
