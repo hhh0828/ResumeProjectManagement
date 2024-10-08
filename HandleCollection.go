@@ -30,8 +30,8 @@ func Projectuploadpage(w http.ResponseWriter, r *http.Request) {
 	http.ServeFile(w, r, "./home/projectuploadpage.html")
 }
 
-func Editproject(w *http.ResponseWriter, r *http.Request) {
-	http.ServeFile(*w, r, "./home/editproject.html")
+func Editproject(w http.ResponseWriter, r *http.Request) {
+	http.ServeFile(w, r, "./home/editproject.html")
 
 }
 
