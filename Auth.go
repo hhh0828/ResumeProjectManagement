@@ -88,6 +88,7 @@ func CreateHmac(data string, secret string) string {
 	return a
 }
 
+// 만료된 토큰 logged-out 을 받을 시 처리하는 에러 처리 문장 필요함ValidateToken
 func ValidateToken(receivedjwt string) bool {
 	separatedjwt := strings.Split(receivedjwt, ".")
 

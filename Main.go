@@ -113,5 +113,5 @@ https://kubernetes.io/ko/docs/tutorials/kubernetes-basics/create-cluster/cluster
 //
 
 // need to do tmr
-// way to remove client local disk cache data... ?
+// way to remove client local disk cache data... ? Cache-Control 헤더 설정
 // Login - Logout Front page implement.
