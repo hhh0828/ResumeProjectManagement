@@ -74,26 +74,32 @@
                     pw: document.getElementById('pw').value,
                 };
 //로그인 이후 성공 / 실패 다시 
-            fetch('/requestlogin', { // 여기에 실제 서버 URL 입력
-                method: 'Post',
-                headers: {
-                      'Content-Type': 'application/json'
-                  },
-                  body: JSON.stringify(updatedData)
-                })
-                .then(data => {
-                    data = data.json()
-                console.log('Success:', data.MessagefromMaster, '님 로그인 환영합니다.');
-                alert(`Form submitted successfully! ${data.MessagefromMaster}`);
-                window.location.href = "/projectspage"; 
-                })
-
-                .catch((error) => {
-                    console.error('Error:', error);
-                 // 오류 시 처리 로직 추가
-                 
-                 alert("ID/PW가 올바르지 않습니다.");
-              });
+fetch('/requestlogin', { // 여기에 실제 서버 URL 입력
+    method: 'POST',
+    headers: {
+        'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(updatedData)
+})
+.then(response => {
+    if (!response.ok) {
+        // 응답이 401일 경우
+        if (response.status === 401) {
+            alert("ID/PW가 올바르지 않습니다.");
+        }
+        throw new Error('로그인 실패');
+    }
+    return response.json(); // JSON 데이터 반환
+})
+.then(data => {
+    console.log('Success:', data.MessagefromMaster, '님 로그인 환영합니다.');
+    alert(`Form submitted successfully! ${data.MessagefromMaster}`);
+    window.location.href = "/projectspage"; 
+})
+.catch((error) => {
+    console.error('Error:', error);
+    // 오류 시 처리 로직 추가
+});
 
         })
 
