@@ -57,7 +57,7 @@
                                 
                             </div>
                             <!-- Submit Button-->
-                            <div class="d-grid mt-4-5"><button class="btn btn-success" id="signinrequest" type="submit">Sign in</button></div>
+                            <div class="d-grid mt-4-5"><button class="btn btn-success" id="signinrequest" type="button">Sign in</button></div>
                         </form>
                     </div>
                 </div>
@@ -67,8 +67,8 @@
     </section> 
 
     <script>
-        document.getElementById('signinrequest').addEventListener('click', function() {
-
+        document.getElementById('signinrequest').addEventListener('click', function(event) {
+            event.preventDefault();
             const updatedData = {
                     id: document.getElementById('id').value,
                     pw: document.getElementById('pw').value,
@@ -82,6 +82,7 @@
                   body: JSON.stringify(updatedData)
                 })
                 .then(data => {
+                    data = data.json()
                 console.log('Success:', data.MessagefromMaster, '님 로그인 환영합니다.');
                 alert(`Form submitted successfully! ${data.MessagefromMaster}`);
                 window.location.href = "/projectspage"; 
