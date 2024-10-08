@@ -77,7 +77,7 @@ func LoginRequest(w http.ResponseWriter, r *http.Request) {
 		}
 		w.Write(response)
 	} else {
-		a, err := json.Marshal(&Message{Status: 200, MessagefromMaster: "A Yo You need to input correct password"})
+		a, err := json.Marshal(&Message{Status: 401, MessagefromMaster: "A Yo You need to input correct password"})
 		if err != nil {
 			log.Println("marshaling failed", err)
 		}
