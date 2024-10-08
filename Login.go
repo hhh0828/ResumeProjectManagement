@@ -21,8 +21,8 @@ func Login(ID string, PW string) {
 type User struct {
 	gorm.Model
 	GivenPermission string
-	Userid          string
-	Userpw          string
+	Userid          string `json:"id"`
+	Userpw          string `json:"pw"`
 	Useremail       string
 }
 type Message struct {
@@ -48,7 +48,7 @@ func (user *User) ChecksinDB(encpwstr string) bool {
 	comparinguser := new(User)
 	db := ConnectDB()
 	db.First(&comparinguser, "userid = ?", user.Userid) // UserId로 찾기
-	fmt.Println(comparinguser, user, "여긴 usre check sin 함수 내")
+	fmt.Println(comparinguser, user, "여긴 user check sin 함수 내")
 	if comparinguser.Userpw == encpwstr {
 		return true
 	} else {
