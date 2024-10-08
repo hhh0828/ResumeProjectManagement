@@ -13,7 +13,7 @@ func NewHandlers() *http.ServeMux {
 	//mux.HandleFunc("/", Indexhandler)
 	//testmodel - authmiddelware - need to have new env for testing the code below.
 
-	//mux.HandleFunc("/returnresume", Authmiddelware(Editproject))
+	mux.HandleFunc("/returnresume", Authmiddelware(Editproject))
 	mux.HandleFunc("/loginpage", LoginPage)
 	mux.HandleFunc("/contactpage", Contactpage)
 	mux.HandleFunc("/resumepage", ResumePage)
@@ -32,7 +32,7 @@ func NewHandlers() *http.ServeMux {
 	//Project
 	mux.HandleFunc("/returnproject", ReturnProject)
 	mux.HandleFunc("/returnprojectone", Returnprojectone)
-	mux.HandleFunc("/editproject", Editproject)
+	//mux.HandleFunc("/editproject", Editproject)
 	mux.HandleFunc("/requestprojectedit", RequestProjectEdit)
 	mux.HandleFunc("/projectuploadpage", Projectuploadpage)
 	mux.HandleFunc("/deleteproject", DeleteProject)
