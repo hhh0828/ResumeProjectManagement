@@ -129,11 +129,9 @@ func Authmiddelware(next func(w http.ResponseWriter, r *http.Request)) handlerfu
 			return
 		}
 		if ValidateToken(cookie.Value) {
-			w.Header().Set("Content-Type", "application/json")
-			var mess Message
-			a, _ := mess.Messagesetter(200, "Token has been validated")
-			json.NewEncoder(w).Encode(a)
+			fmt.Println("token has been validated")
 			next(w, r)
+
 		} else {
 			w.WriteHeader(401)
 			return
