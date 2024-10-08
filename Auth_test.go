@@ -28,15 +28,16 @@ func TestMain(t *testing.T) {
 	ValidateToken(tk)
 }
 
-//std test run
+// std test run
 func Test(t *testing.T) {
-	feedback := &Feedback{
-		Name:    "hyun",
-		Email:   "mess@hyunho.com",
-		Message: "test",
+	user := &User{
+		GivenPermission: "WebMaster",
+		Userid:          "hhhcjswo",
+		Userpw:          "d7349801",
+		Useremail:       "hhhcjswo@naver.com",
 	}
-	data, _ := json.Marshal(feedback)
-	newreq, _ := http.NewRequest("POST", "https://www.hyunhoworld.site/submit", strings.NewReader(string(data)))
+	data, _ := json.Marshal(user)
+	newreq, _ := http.NewRequest("POST", "https://www.hyunhoworld.site/joinus", strings.NewReader(string(data)))
 	newreq.Header.Set("Content-Type", "application/json")
 	getres, _ := http.DefaultClient.Do(newreq)
 	fmt.Println(getres.Status)
@@ -45,3 +46,11 @@ func Test(t *testing.T) {
 	println(string(p))
 
 }
+
+// type User struct {
+// 	gorm.Model
+// 	GivenPermission string
+// 	Userid          string
+// 	Userpw          string
+// 	Useremail       string
+// }

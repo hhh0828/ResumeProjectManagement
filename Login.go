@@ -5,6 +5,7 @@ import (
 	"crypto/sha256"
 	"encoding/hex"
 	"encoding/json"
+	"fmt"
 	"log"
 	"net/http"
 	"time"
@@ -47,6 +48,7 @@ func (user *User) ChecksinDB(encpwstr string) bool {
 	comparinguser := new(User)
 	db := ConnectDB()
 	db.First(&comparinguser, "userid = ?", user.Userid) // UserId로 찾기
+	fmt.Println(comparinguser, user, "여긴 usre check sin 함수 내")
 	if comparinguser.Userpw == encpwstr {
 		return true
 	} else {
@@ -63,6 +65,7 @@ func LoginRequest(w http.ResponseWriter, r *http.Request) {
 	encpw := (loguser.Encryption())
 	loguser.Userpw = hex.EncodeToString(encpw[:])
 	//Matching user
+	fmt.Println(loguser, "여기는 Request")
 	if loguser.ChecksinDB(loguser.Userpw) {
 		//쿠키 추가하여 던져주고 확인하는.
 		w.Header().Set("Content-Type", "application/json")
@@ -78,12 +81,16 @@ func LoginRequest(w http.ResponseWriter, r *http.Request) {
 	}
 }
 func JoinasMember(w http.ResponseWriter, r *http.Request) {
+	//User 객체 포인터 생성
 	requesttobeuser := new(User)
+	// 사용자 입력 값 토대로
 	err := json.NewDecoder(r.Body).Decode(&requesttobeuser)
 	if err != nil {
 		log.Println("fail to decode the User join data", err)
 	}
+	//사용자 엔크립션 해시256
 	a := requesttobeuser.Encryption()
+	//패스워드 헥사로
 	requesttobeuser.Userpw = hex.EncodeToString(a[:])
 	db := ConnectDB()
 	db.Create(&requesttobeuser)
