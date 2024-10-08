@@ -91,7 +91,7 @@ func ConnectDB() *gorm.DB {
 	dsn := "host=172.17.0.2 user=postgres password=root1234 dbname=resume1 port=5432 sslmode=disable TimeZone=Asia/Seoul" // for docker infra deployment.
 	db, err := gorm.Open(postgres.Open(dsn), &gorm.Config{})
 	if err != nil {
-		log.Fatal("error occrued with : ", err)
+		log.Println("error occrued with : ", err)
 	}
 
 	db.AutoMigrate(&Feedback{}, &Experience{}, &Skill{}, &Languages{}, &Project{})

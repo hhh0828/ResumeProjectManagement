@@ -91,6 +91,10 @@ func JoinasMember(w http.ResponseWriter, r *http.Request) {
 	json.NewEncoder(w).Encode(&Message{Status: 200, MessagefromMaster: "the request has been sent to the server please try to login. if you have issue with the logon send us a feedback on the contact page"})
 }
 
+func LoginPage(w http.ResponseWriter, r *http.Request) {
+	http.ServeFile(w, r, "./home/Login.html")
+}
+
 /*
 Feedbacks from GPT4
 토큰 발급: 로그인 성공 시 토큰을 발급하는 로직이 필요하다고 하셨는데, 이를 통해 사용자의 세션을 관리하는 것이 좋습니다. 앞서 제안드린 JWT를 사용하는 방법을 참고하시면 도움이 될 것입니다. Done.
@@ -103,7 +107,3 @@ Feedbacks from GPT4
 */
 
 // JWT Token =
-
-func authMidware() {
-
-}

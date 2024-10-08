@@ -45,6 +45,26 @@ document.getElementById('contactForm').addEventListener('submit', function(event
 });
 */
 
+
+
+
+//Domcontent load시에 사용자의 쿠키데이터를 전달하여, 서버로부터 validation 받은 후 페이지를 보여준다. 
+//브라우저 쿠키를 가지고있으면 // logout page로 보이게 설정
+//브라우저 쿠키를 가지고있지 않으면 login page로 보이게 설정
+
+document.addEventListener("DOMContentLoaded", function() {
+
+    
+
+const LogInOutCard = `
+               <li class="nav-item"><a class="nav-link" id="LogInOut" href="loginpage">Login</a></li>
+            `;
+            LogContainer.insertAdjacentHTML('beforeend', LogInOutCard);
+
+})
+
+
+
 /*
 document.addEventListener("DOMContentLoaded", function () {
     // API로부터 JSON 데이터 가져오기

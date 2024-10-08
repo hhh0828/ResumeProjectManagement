@@ -86,7 +86,7 @@ func RetriveCache(w http.ResponseWriter, r *http.Request) {
 		fmt.Println("error with decoding the Cachedata request", err)
 	}
 
-	var response *Cachedvalue
+	//var response *Cachedvalue
 	//check cached data
 	/*
 		for savedkey, values := range Cachemem.data {
