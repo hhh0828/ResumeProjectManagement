@@ -43,7 +43,7 @@ func NewHandlers() *http.ServeMux {
 	//User and Login.
 	mux.HandleFunc("/requestlogin", LoginRequest)
 	mux.HandleFunc("/joinus", JoinasMember)
-
+	mux.HandleFunc("/logout", Logout)
 	//Static Fileserver - Css / JS push
 	staticFileServer := http.FileServer(http.Dir("./home"))
 	mux.Handle("/", http.StripPrefix("/", staticFileServer))

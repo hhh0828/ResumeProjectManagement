@@ -52,16 +52,21 @@ document.getElementById('contactForm').addEventListener('submit', function(event
 //브라우저 쿠키를 가지고있으면 // logout page로 보이게 설정
 //브라우저 쿠키를 가지고있지 않으면 login page로 보이게 설정
 
-// document.addEventListener("DOMContentLoaded", function() {
+document.addEventListener("DOMContentLoaded", function() {
+    const getCookieValue = (name) => {
+        const value = `; ${document.cookie}`;
+        const parts = value.split(`; ${name}=`);
+        if (parts.length === 2) return parts.pop().split(';').shift();
+    };
 
-//     alert(document.cookie[0])
+    const jwt = getCookieValue('token'); // JWT 쿠키 확인
 
-// const LogInOutCard = `
-//                <li class="nav-item"><a class="nav-link" id="LogInOut" href="loginpage">Login</a></li>
-//             `;
-//             LogContainer.insertAdjacentHTML('beforeend', LogInOutCard);
+    const LogInOutCard = jwt 
+        ? `<li class="nav-item"><a class="nav-link" id="LogInOut" href="/logout">Logout</a></li>`
+        : `<li class="nav-item"><a class="nav-link" id="LogInOut" href="loginpage">Login</a></li>`;
 
-// })
+    LogContainer.insertAdjacentHTML('beforeend', LogInOutCard);
+});
 
 
 

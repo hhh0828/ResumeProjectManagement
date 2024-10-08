@@ -80,6 +80,17 @@ func LoginRequest(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, "A Yo You need to input correct password", http.StatusUnauthorized)
 	}
 }
+
+func Logout(w http.ResponseWriter, r *http.Request) {
+	cookie, err := r.Cookie("token")
+	if err != nil {
+		http.Error(w, "cookie in there?", 400)
+		return
+	}
+	cookie.Value = "logged-out"
+	http.SetCookie(w, cookie)
+}
+
 func JoinasMember(w http.ResponseWriter, r *http.Request) {
 	//User 객체 포인터 생성
 	requesttobeuser := new(User)
