@@ -52,16 +52,16 @@ document.getElementById('contactForm').addEventListener('submit', function(event
 //브라우저 쿠키를 가지고있으면 // logout page로 보이게 설정
 //브라우저 쿠키를 가지고있지 않으면 login page로 보이게 설정
 
-document.addEventListener("DOMContentLoaded", function() {
+// document.addEventListener("DOMContentLoaded", function() {
 
-    alert(document.cookie[0])
+//     alert(document.cookie[0])
 
-const LogInOutCard = `
-               <li class="nav-item"><a class="nav-link" id="LogInOut" href="loginpage">Login</a></li>
-            `;
-            LogContainer.insertAdjacentHTML('beforeend', LogInOutCard);
+// const LogInOutCard = `
+//                <li class="nav-item"><a class="nav-link" id="LogInOut" href="loginpage">Login</a></li>
+//             `;
+//             LogContainer.insertAdjacentHTML('beforeend', LogInOutCard);
 
-})
+// })
 
 
 
