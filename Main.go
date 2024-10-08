@@ -111,3 +111,7 @@ https://kubernetes.io/ko/docs/tutorials/kubernetes-basics/create-cluster/cluster
 // DB remaster >> when server sends data to client, the data should have a PKey.
 // DB architecture refactoring. - high level.
 //
+
+// need to do tmr
+// way to remove client local disk cache data... ?
+// Login - Logout Front page implement.
