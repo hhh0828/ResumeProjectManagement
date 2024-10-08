@@ -14,6 +14,7 @@ func NewHandlers() *http.ServeMux {
 	//testmodel - authmiddelware - need to have new env for testing the code below.
 
 	mux.HandleFunc("/editproject", Authmiddelware(Editproject))
+
 	mux.HandleFunc("/loginpage", LoginPage)
 	mux.HandleFunc("/contactpage", Contactpage)
 	mux.HandleFunc("/resumepage", ResumePage)
