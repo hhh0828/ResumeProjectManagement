@@ -51,7 +51,6 @@ document.getElementById('contactForm').addEventListener('submit', function(event
 //Domcontent load시에 사용자의 쿠키데이터를 전달하여, 서버로부터 validation 받은 후 페이지를 보여준다. 
 //브라우저 쿠키를 가지고있으면 // logout page로 보이게 설정
 //브라우저 쿠키를 가지고있지 않으면 login page로 보이게 설정
-
 document.addEventListener("DOMContentLoaded", function() {
     const getCookieValue = (name) => {
         const value = `; ${document.cookie}`;
@@ -61,9 +60,10 @@ document.addEventListener("DOMContentLoaded", function() {
 
     const jwt = getCookieValue('token'); // JWT 쿠키 확인
 
-    const LogInOutCard = jwt 
-        ? `<li class="nav-item"><a class="nav-link" id="LogInOut" href="/logout">Logout</a></li>`
-        : `<li class="nav-item"><a class="nav-link" id="LogInOut" href="loginpage">Login</a></li>`;
+    // jwt 값이 "logged-out"이거나 없으면 로그인 버튼, 그 외에는 로그아웃 버튼
+    const LogInOutCard = (jwt === 'logged-out' || !jwt)
+        ? `<li class="nav-item"><a class="nav-link" id="LogInOut" href="loginpage">Login</a></li>`
+        : `<li class="nav-item"><a class="nav-link" id="LogInOut" href="/logout">Logout</a></li>`;
 
     LogContainer.insertAdjacentHTML('beforeend', LogInOutCard);
 });
