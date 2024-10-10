@@ -17,7 +17,7 @@ type PageData struct {
 func IndexHandler(w http.ResponseWriter, r *http.Request) {
 	var data PageData
 	cookie, err := r.Cookie("token")
-	if err != nil {
+	if err != nil || !ValidateToken(cookie.Value) {
 		fmt.Println("error while getting cookiee")
 		//cookie.Value = "error"
 		data = PageData{

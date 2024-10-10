@@ -118,7 +118,7 @@ func ValidateToken(receivedjwt string) bool {
 
 type handlerfunc func(w http.ResponseWriter, r *http.Request)
 
-//Unix ?
+//Unix ??
 
 // 시간 비교
 func Authmiddelware(next func(w http.ResponseWriter, r *http.Request)) handlerfunc {
