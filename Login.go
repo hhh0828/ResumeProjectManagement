@@ -14,9 +14,6 @@ import (
 )
 
 // add login func
-func Login(ID string, PW string) {
-
-}
 
 type User struct {
 	gorm.Model
@@ -87,8 +84,9 @@ func Logout(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, "cookie in there?", 400)
 		return
 	}
-	cookie.Value = "logged-out"
+	cookie.Value = "logged.out.user"
 	http.SetCookie(w, cookie)
+	http.Redirect(w, r, "/index", http.StatusContinue)
 }
 
 func JoinasMember(w http.ResponseWriter, r *http.Request) {
