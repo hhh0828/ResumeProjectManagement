@@ -94,7 +94,7 @@ fetch('/requestlogin', { // 여기에 실제 서버 URL 입력
 .then(data => {
     console.log('Success:', data.MessagefromMaster, '님 로그인 환영합니다.');
     alert(`Form submitted successfully! ${data.MessagefromMaster}`);
-    window.location.href = "/projectspage"; 
+    window.location.href = "/index"; 
 })
 .catch((error) => {
     console.error('Error:', error);

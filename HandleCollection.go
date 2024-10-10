@@ -4,16 +4,47 @@ import (
 	"bytes"
 	"encoding/json"
 	"fmt"
+	"html/template"
 	"log"
 	"net/http"
 )
 
-func Indexhandler(w http.ResponseWriter, r *http.Request) {
-
-	http.ServeFile(w, r, "./home/index.html")
-
+type PageData struct {
+	IsLogged string
+	Con      string
 }
 
+func IndexHandler(w http.ResponseWriter, r *http.Request) {
+	var data PageData
+	cookie, err := r.Cookie("token")
+	if err != nil {
+		fmt.Println("error while getting cookiee")
+		//cookie.Value = "error"
+		data = PageData{
+			IsLogged: "/loginpage",
+			Con:      "Login",
+		}
+	}
+	if err == nil && ValidateToken(cookie.Value) {
+		fmt.Println("login state still validated")
+		data = PageData{
+			IsLogged: "/logout",
+			Con:      "Logout",
+		}
+	}
+
+	t, err := template.ParseFiles("./home/index.html")
+	if err != nil {
+		http.Error(w, "Unable to load template", http.StatusInternalServerError)
+		return
+	}
+	fmt.Println(data)
+	err1 := t.Execute(w, data)
+	if err1 != nil {
+		log.Printf("Error executing template: %v", err1)
+		http.Error(w, "Template execution error", http.StatusInternalServerError)
+	}
+}
 func ResumePage(w http.ResponseWriter, r *http.Request) {
 	http.ServeFile(w, r, "./home/resume.html")
 

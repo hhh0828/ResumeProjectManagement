@@ -10,7 +10,7 @@ func NewHandlers() *http.ServeMux {
 	//HandlerFunc의 역할...
 	//serveHTTP를 반환하는 Handler로 바꿔줌 Handlefunc을
 	//mux.Handle("/updateres", authMiddleware(http.HandlerFunc(UpdateResume)))
-	//mux.HandleFunc("/", Indexhandler)
+	mux.HandleFunc("/index", IndexHandler)
 	//testmodel - authmiddelware - need to have new env for testing the code below.
 
 	mux.HandleFunc("/editproject", Authmiddelware(Editproject))
@@ -45,8 +45,13 @@ func NewHandlers() *http.ServeMux {
 	mux.HandleFunc("/joinus", JoinasMember)
 	mux.HandleFunc("/logout", Logout)
 	//Static Fileserver - Css / JS push
+	mux.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
+		http.Redirect(w, r, "/index", http.StatusSeeOther)
+	})
+
 	staticFileServer := http.FileServer(http.Dir("./home"))
-	mux.Handle("/", http.StripPrefix("/", staticFileServer))
+	mux.Handle("/home/", http.StripPrefix("/home/", staticFileServer))
+	// 뒤에 인덱스페이지 요청으로 가게끔 해야함... 첫페이지가 인덱스임.
 
 	fmt.Println("handlerset")
 
