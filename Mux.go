@@ -46,7 +46,7 @@ func NewHandlers() *http.ServeMux {
 	mux.HandleFunc("/logout", Logout)
 	//Static Fileserver - Css / JS push
 	mux.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
-		http.Redirect(w, r, "/index", 200)
+		http.Redirect(w, r, "/index", http.StatusMovedPermanently)
 	})
 
 	staticFileServer := http.FileServer(http.Dir("./home"))

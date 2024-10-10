@@ -86,7 +86,7 @@ func Logout(w http.ResponseWriter, r *http.Request) {
 	}
 	cookie.Value = "logged.out.user"
 	http.SetCookie(w, cookie)
-	http.Redirect(w, r, "/index", http.StatusContinue)
+	http.Redirect(w, r, "/index", http.StatusMovedPermanently)
 }
 
 func JoinasMember(w http.ResponseWriter, r *http.Request) {

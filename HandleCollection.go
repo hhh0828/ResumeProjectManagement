@@ -15,6 +15,7 @@ type PageData struct {
 }
 
 func IndexHandler(w http.ResponseWriter, r *http.Request) {
+
 	var data PageData
 	cookie, err := r.Cookie("token")
 	if err != nil || !ValidateToken(cookie.Value) {
@@ -62,6 +63,7 @@ func Projectuploadpage(w http.ResponseWriter, r *http.Request) {
 }
 
 func Editproject(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Cache-Control", "no-store")
 	http.ServeFile(w, r, "./home/editproject.html")
 
 }
@@ -294,7 +296,9 @@ func Returnprojectone(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		log.Fatal("error occured with Marshaling the Projectdata", err)
 	}
+	w.Header().Set("Cache-Control", "no-store")
 	w.Header().Set("Content-Type", "application/json")
+
 	w.Write(data)
 
 }
