@@ -86,6 +86,7 @@ func Logout(w http.ResponseWriter, r *http.Request) {
 	}
 	cookie.Value = "logged.out.user"
 	http.SetCookie(w, cookie)
+	w.Header().Set("Cache-Control", "no-store")
 	http.Redirect(w, r, "/index", http.StatusMovedPermanently)
 }
 
