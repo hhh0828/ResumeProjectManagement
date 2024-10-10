@@ -45,3 +45,11 @@ authmidware 구현 -  and providing validating - 9월 25일 백엔드 서버 업
 
 목적 : 게시글 수정 권한 차등화
 
+10월 10일
+로그인 페이지 구현완료.
+로그인 상태 별 쿠기 셋.
+로그인 상태에 따른 index page 수정 완료.
+block disk cache using, and edit paths of all the css js 
+
+
+10월 11일부터~ CICD 자동화를 위한 git push trigger server 구현
