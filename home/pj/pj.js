@@ -76,7 +76,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 fetch(`/editproject?id=${projectId}`) // 템플릿 리터럴로 변수 삽입
                  .then(response => {
                   if (response.ok) {
-                        alert(`${projectId}`+'로 이동합니다')
+                        //alert(`${projectId}`+'로 이동합니다')
                  } else if (response.status === 401) {
                        // 401 에러가 발생하면 로그인 페이지로 리디렉션
                        alert('권한이 없습니다, 해당 작업은 로그인이 필요합니다, 로그인 페이지로 이동합니다')
