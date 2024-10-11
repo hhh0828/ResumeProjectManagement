@@ -54,3 +54,22 @@ block disk cache using, and edit paths of all the css js
 
 10월 11일부터~ CICD 자동화를 위한 git push trigger server 구현
 Jenkins 사용기
+ENVPATH =_= 
+
+tool set and git & Jenkins hook setting - completed.
+
+init docker based jenkins.- completed.
+
+Set go plugin completed. set properties - completed.
+add tool part code on Jenkinsfile
+checked that the tmp user works as Jenkins system in declared pipeline.
+test build successed.
+
+generate token for git access on github. and add credential with token to request src - completed
+
+
+To-Do
+
+Create Docker based CD.
+Create test code for all the components.
+so that any change must not make any issue. 
