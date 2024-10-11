@@ -5,14 +5,14 @@ pipeline {
         stage('Build') {
             steps {
                 echo 'Building... test git push triggered '
-
+                sh 'go mod tidy'
                 
             }
         }
         stage('Test') {
             steps {
                 echo 'Testing...'
-                
+                sh 'go test .'
             }
         }
         stage('Deploy') {
