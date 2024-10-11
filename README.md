@@ -53,3 +53,4 @@ block disk cache using, and edit paths of all the css js
 
 
 10월 11일부터~ CICD 자동화를 위한 git push trigger server 구현
+Jenkins 사용기
