@@ -32,8 +32,8 @@ func TestMain(t *testing.T) {
 func Test(t *testing.T) {
 	user := &User{
 		GivenPermission: "WebMaster",
-		Userid:          "hhhcjswo",
-		Userpw:          "d7349801",
+		Userid:          "soyeon",
+		Userpw:          "lovelove",
 		Useremail:       "hhhcjswo@naver.com",
 	}
 	data, _ := json.Marshal(user)
