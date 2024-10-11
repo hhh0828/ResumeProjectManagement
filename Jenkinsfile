@@ -13,6 +13,7 @@ pipeline {
             steps {
                 echo 'Testing...'
                 sh 'go test .'
+                echo 'is it working ?'
             }
         }
         stage('Deploy') {
