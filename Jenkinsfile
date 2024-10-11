@@ -12,8 +12,8 @@ pipeline {
         }
         stage('Test') {
             steps {
-                echo 'Testing...'
-                sh 'go test .'
+                echo 'Testing... the token system'
+                sh 'go test . -v'
                 echo 'is it working ?'
             }
         }
