@@ -73,3 +73,6 @@ To-Do
 Create Docker based CD.
 Create test code for all the components.
 so that any change must not make any issue. 
+
+1. build docker image on jenkins server. and push them on the docker hub.
+2. access to the server that will have new image, and create docker container with new image. 
