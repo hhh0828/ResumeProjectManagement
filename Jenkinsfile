@@ -5,6 +5,7 @@ pipeline {
         stage('Build') {
             steps {
                 echo 'Building... test git push triggered '
+                sh 'go version'
                 sh 'go mod tidy'
                 
             }
