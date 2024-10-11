@@ -136,7 +136,6 @@ func Authmiddelware(next func(w http.ResponseWriter, r *http.Request)) handlerfu
 		} else {
 			w.WriteHeader(401)
 			//여기서 리다이렉트로 보내버려도됨.
-			http.HandleFunc()
 			return
 		}
 
