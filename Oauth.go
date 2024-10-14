@@ -76,12 +76,12 @@ type ResponseAuth struct {
 }
 
 type ResponseReqToken struct {
-	Access_token      string
-	Refresh_token     string
-	Token_type        string
-	Expires_in        int //Sec
-	Error             string
-	Error_description string
+	Access_token      string `json:"access_token"`
+	Refresh_token     string `json:"refresh_token"`
+	Token_type        string `json:"token_type"`
+	Expires_in        int    `json:"expires_in"`
+	Error             string `json:"error"`
+	Error_description string `json:"error_description"`
 }
 
 ////   https://nid.naver.com/oauth2.0/token?grant_type=authorization_code&client_id=jyvqXeaVOVmV&client_secret=527300A0_COq1_XV33cf&code=EIc5bFrl4RibFls1&state=9kgsGTfH4j7IyAkg
