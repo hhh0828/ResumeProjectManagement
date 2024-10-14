@@ -192,7 +192,10 @@ func OauthCallback(w http.ResponseWriter, r *http.Request) {
 	defer response.Body.Close()
 	json.Unmarshal(datas, resp)
 
+	fmt.Println(resp)
 	fmt.Println(resp.Data.Name)
+	//로그인 기록 체크 해야함. AccessToken 체크해서 Cache되어있는 사용자인지 체크 한시간 지났는지 체크하는 로직 만들기- 준비물 MAP
+	//로그인 후, 데이터베이스에 사용자 고유 식별정보와 이름을 매칭하여 저장함. 없는 회원의 겨우 회원 가입 유도.
 	http.Redirect(w, r, "/index", http.StatusTemporaryRedirect)
 
 	// and send it back to us the Auth code
