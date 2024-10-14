@@ -151,15 +151,18 @@ func OauthCallback(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	fmt.Println(code, state)
 	//돌아온 콜백 요청이 괜찮으면, 그길로 aCCESS 토큰 요청
 	data := Tokenrequest(code, state)
 
+	fmt.Println(data, "만들어진 토큰요청용 urlvalue")
 	req, err := http.NewRequest("POST", "https://nid.naver.com/oauth2.0/token", strings.NewReader(data.Encode()))
 	if err != nil {
 		log.Println("the error occured with request", err)
 	}
 	res, _ := http.DefaultClient.Do(req)
-	responedtoken := &ResponseReqToken{}
+	fmt.Println("isit working", res)
+	responedtoken := new(ResponseReqToken)
 	json.NewDecoder(res.Body).Decode(responedtoken)
 	fmt.Println(responedtoken.Access_token)
 	// and send it back to us the Auth code
