@@ -1,7 +1,12 @@
 package main
 
 import (
+	"encoding/base64"
+	"encoding/json"
 	"fmt"
+	"log"
+	"net/http"
+	"strings"
 	"testing"
 	"time"
 )
@@ -23,6 +28,34 @@ func TestMain(t *testing.T) {
 	fmt.Println(tk)
 
 	ValidateToken(tk)
+}
+
+func Test(t *testing.T) {
+
+	Nreq := &NaverLoginAuth{}
+
+	Nreq.Client_id = "FfJDLNxLwC5I_H3NV7z6"
+	Nreq.Redirect_Uri = "https://wwww.hyunhoworld.site/index"
+	Nreq.Response_type = "code"
+	state := "test crossss"
+	EncState := base64.URLEncoding.EncodeToString([]byte(state))
+	Nreq.State = EncState
+	data, _ := json.Marshal(Nreq)
+	req, err := http.NewRequest("POST", "https://nid.naver.com/oauth2.0/authorize", strings.NewReader(string(data)))
+	if err != nil {
+		log.Println("failed to create request", err)
+	}
+	res, err := http.DefaultClient.Do(req)
+	if err != nil {
+		log.Println("err occrured during get response from logon server", err)
+	}
+	authcode := new(ResponseAuth)
+	json.NewDecoder(res.Body).Decode(&authcode)
+	if authcode.State != EncState {
+		fmt.Println(authcode)
+	}
+	fmt.Println(authcode)
+
 }
 
 // std test run
