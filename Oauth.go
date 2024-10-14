@@ -114,7 +114,7 @@ func OauthSignin(w http.ResponseWriter, r *http.Request) {
 	//response a login page for final client
 	naverLoginURL := "https://nid.naver.com/oauth2.0/authorize"
 	clientID := "FfJDLNxLwC5I_H3NV7z6"
-	redirectURI := "https://www.hyunhoworld.site/index"
+	redirectURI := "https://www.hyunhoworld.site//navercallback"
 	responseType := "code"
 	state := GenerateOauthstate(w)
 
