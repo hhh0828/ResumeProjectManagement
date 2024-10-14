@@ -160,6 +160,7 @@ func OauthCallback(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		log.Println("the error occured with request", err)
 	}
+	req.Header.Set("Content-Type", "application/x-www-form-urlencoded")
 	res, _ := http.DefaultClient.Do(req)
 	fmt.Println("isit working", res)
 	responedtoken := new(ResponseReqToken)
