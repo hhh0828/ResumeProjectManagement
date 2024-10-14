@@ -190,6 +190,7 @@ func OauthCallback(w http.ResponseWriter, r *http.Request) {
 	resp := &Responses{}
 	datas, _ := io.ReadAll(response.Body)
 	defer response.Body.Close()
+	fmt.Println(string(datas))
 	json.Unmarshal(datas, resp)
 
 	fmt.Println(resp)
