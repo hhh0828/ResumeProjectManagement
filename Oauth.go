@@ -5,7 +5,6 @@ import (
 	"encoding/json"
 	_ "encoding/json"
 	"fmt"
-	"io"
 	"log"
 	"math/rand"
 	"net/http"
@@ -142,6 +141,19 @@ func OauthSignin(w http.ResponseWriter, r *http.Request) {
 
 ////   https://nid.naver.com/oauth2.0/token?grant_type=authorization_code&client_id=jyvqXeaVOVmV&client_secret=527300A0_COq1_XV33cf&code=EIc5bFrl4RibFls1&state=9kgsGTfH4j7IyAkg
 
+type Responses struct {
+	ResultCode string `json:"resultcode"`
+	Message    string `json:"message"`
+	Data       struct {
+		ID        string `json:"id"`
+		Age       string `json:"age"`
+		Gender    string `json:"gender"`
+		Name      string `json:"name"`
+		Birthday  string `json:"birthday"`
+		BirthYear string `json:"birthyear"`
+	} `json:"response"`
+}
+
 func OauthCallback(w http.ResponseWriter, r *http.Request) {
 	code := r.URL.Query().Get("code")
 	state := r.URL.Query().Get("state")
@@ -173,11 +185,12 @@ func OauthCallback(w http.ResponseWriter, r *http.Request) {
 	getreq.Header.Set("Authorization", " Bearer "+responedtoken.Access_token)
 
 	response, _ := http.DefaultClient.Do(getreq)
+	resp := &Responses{}
+	json.NewDecoder(response.Body).Decode(resp)
 
-	value, _ := io.ReadAll(response.Body)
-	defer response.Body.Close()
+	fmt.Println(resp)
+	http.Redirect(w, r, "/index", http.StatusTemporaryRedirect)
 
-	fmt.Println(string(value))
 	// and send it back to us the Auth code
 
 }
