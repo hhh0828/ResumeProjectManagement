@@ -152,6 +152,8 @@ type Responses struct {
 		Name      string `json:"name"`
 		Birthday  string `json:"birthday"`
 		BirthYear string `json:"birthyear"`
+		Mobile    string `json:"mobile"`
+		Mobile2   string `json:"mobile_e164"`
 	} `json:"response"`
 }
 
@@ -190,7 +192,7 @@ func OauthCallback(w http.ResponseWriter, r *http.Request) {
 	resp := &Responses{}
 	datas, _ := io.ReadAll(response.Body)
 	defer response.Body.Close()
-	fmt.Println(string(datas))
+	//fmt.Println(string(datas))
 	json.Unmarshal(datas, resp)
 
 	fmt.Println(resp)
@@ -200,7 +202,7 @@ func OauthCallback(w http.ResponseWriter, r *http.Request) {
 	http.Redirect(w, r, "/index", http.StatusTemporaryRedirect)
 
 	// and send it back to us the Auth code
-
+	//test
 }
 
 // to Resource server
