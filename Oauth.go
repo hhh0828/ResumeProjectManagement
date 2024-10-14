@@ -5,6 +5,7 @@ import (
 	"encoding/json"
 	_ "encoding/json"
 	"fmt"
+	"io"
 	"log"
 	"math/rand"
 	"net/http"
@@ -185,10 +186,13 @@ func OauthCallback(w http.ResponseWriter, r *http.Request) {
 	getreq.Header.Set("Authorization", " Bearer "+responedtoken.Access_token)
 
 	response, _ := http.DefaultClient.Do(getreq)
-	resp := &Responses{}
-	json.NewDecoder(response.Body).Decode(resp)
 
-	fmt.Println(resp)
+	resp := &Responses{}
+	datas, _ := io.ReadAll(response.Body)
+	defer response.Body.Close()
+	json.Unmarshal(datas, resp)
+
+	fmt.Println(resp.Data.Name)
 	http.Redirect(w, r, "/index", http.StatusTemporaryRedirect)
 
 	// and send it back to us the Auth code
