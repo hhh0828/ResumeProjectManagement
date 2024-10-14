@@ -1,12 +1,16 @@
 package main
 
 import (
+	"encoding/base64"
+	"encoding/json"
 	_ "encoding/json"
 	"fmt"
 	"log"
+	"math/rand"
 	"net/http"
 	"net/url"
 	"strings"
+	"time"
 )
 
 //여기는 request part
@@ -80,13 +84,39 @@ type ResponseReqToken struct {
 	Error_description string
 }
 
+////   https://nid.naver.com/oauth2.0/token?grant_type=authorization_code&client_id=jyvqXeaVOVmV&client_secret=527300A0_COq1_XV33cf&code=EIc5bFrl4RibFls1&state=9kgsGTfH4j7IyAkg
+
+func GenerateOauthstate(w http.ResponseWriter) string {
+	expiration := time.Now().Add(3600 * time.Second)
+
+	const letters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
+
+	//6 칸짜리 []byte 배열
+	b := make([]byte, 16)
+	rand.Seed(time.Now().Unix())
+	//b 슬 에 랜덤값 주입 랜덤 숫자를 넣어줌
+	for i := range b {
+		b[i] = letters[rand.Intn(len(letters))]
+	}
+
+	state := base64.URLEncoding.EncodeToString(b)
+	cook := &http.Cookie{
+		Name:    "ostate",
+		Value:   state,
+		Expires: expiration,
+	}
+
+	http.SetCookie(w, cook)
+	return state
+}
+
 func OauthSignin(w http.ResponseWriter, r *http.Request) {
 	//response a login page for final client
 	naverLoginURL := "https://nid.naver.com/oauth2.0/authorize"
 	clientID := "FfJDLNxLwC5I_H3NV7z6"
 	redirectURI := "https://www.hyunhoworld.site/index"
 	responseType := "code"
-	state := "test_crossss"
+	state := GenerateOauthstate(w)
 
 	// 쿼리 파라미터를 구성
 	queryParams := url.Values{}
@@ -99,97 +129,57 @@ func OauthSignin(w http.ResponseWriter, r *http.Request) {
 	fullURL := fmt.Sprintf("%s?%s", naverLoginURL, queryParams.Encode())
 
 	// 사용자를 네이버 로그인 페이지로 리다이렉트
-	req, err := http.NewRequest("GET", fullURL, nil)
-	if err != nil {
-		log.Println("failed to create request", err)
-		return
-	}
-	fmt.Println(fullURL)
+	// req, err := http.NewRequest("GET", fullURL, nil)
+	// if err != nil {
+	// 	log.Println("failed to create request", err)
+	// 	return
+	// }
+	//fmt.Println(req)
 	// 네이버로 리다이렉트
-	http.Redirect(w, req, fullURL, http.StatusFound)
+	http.Redirect(w, r, fullURL, http.StatusFound)
 }
 
-func OauthSigninpost(w http.ResponseWriter, r *http.Request) {
-	naverLoginURL := "https://nid.naver.com/oauth2.0/authorize"
-	clientID := "FfJDLNxLwC5I_H3NV7z6"
-	redirectURI := "https://www.hyunhoworld.site/index"
-	responseType := "code"
-	state := "test_crossss"
+////   https://nid.naver.com/oauth2.0/token?grant_type=authorization_code&client_id=jyvqXeaVOVmV&client_secret=527300A0_COq1_XV33cf&code=EIc5bFrl4RibFls1&state=9kgsGTfH4j7IyAkg
 
-	// POST 요청에 사용할 폼 데이터를 URL 인코딩 형식으로 설정
-	formData := url.Values{}
-	formData.Add("client_id", clientID)
-	formData.Add("redirect_uri", redirectURI)
-	formData.Add("response_type", responseType)
-	formData.Add("state", state)
-
-	// POST 요청 생성
-	req, err := http.NewRequest("POST", naverLoginURL, strings.NewReader(formData.Encode()))
-	if err != nil {
-		log.Println("failed to create request", err)
+func OauthCallback(w http.ResponseWriter, r *http.Request) {
+	code := r.URL.Query().Get("code")
+	state := r.URL.Query().Get("state")
+	cookie, _ := r.Cookie("ostate")
+	if cookie.Value != state {
+		log.Println("invalid cookie")
+		http.Redirect(w, r, "/index", http.StatusTemporaryRedirect)
 		return
 	}
 
-	// Content-Type 설정
-	req.Header.Add("Content-Type", "application/x-www-form-urlencoded")
+	//돌아온 콜백 요청이 괜찮으면, 그길로 aCCESS 토큰 요청
+	data := Tokenrequest(code, state)
 
-	// 요청 실행
-	client := &http.Client{}
-	res, err := client.Do(req)
+	req, err := http.NewRequest("POST", "https://nid.naver.com/oauth2.0/token", strings.NewReader(data.Encode()))
 	if err != nil {
-		log.Println("error occurred during POST request", err)
-		return
+		log.Println("the error occured with request", err)
 	}
-	defer res.Body.Close()
+	res, _ := http.DefaultClient.Do(req)
+	responedtoken := &ResponseReqToken{}
+	json.NewDecoder(res.Body).Decode(responedtoken)
 
-	// 리다이렉트가 처리되는지 확인 (응답 헤더에서 Location 확인)
-	if res.StatusCode == http.StatusFound || res.StatusCode == http.StatusMovedPermanently {
-		fmt.Println("Redirected to:", res.Header.Get("Location"))
-	} else {
-		fmt.Println("Response Status:", res.Status)
-		fmt.Println("Response Headers:", res.Header)
-	}
-}
-
-// func (Nreq *NaverLoginAuth) SigninAuthRequest() string {
-
-// 	Nreq.Client_id = "FfJDLNxLwC5I_H3NV7z6"
-// 	Nreq.Redirect_Uri = "https://wwww.hyunhoworld.site/index"
-// 	Nreq.Response_type = "code"
-// 	state := "test crossss"
-// 	EncState := base64.URLEncoding.EncodeToString([]byte(state))
-// 	Nreq.State = EncState
-// 	data, _ := json.Marshal(Nreq)
-// 	req, err := http.NewRequest("POST", "https://nid.naver.com/oauth2.0/authorize", strings.NewReader(string(data)))
-// 	if err != nil {
-// 		log.Println("failed to create request", err)
-// 	}
-// 	res, err := http.DefaultClient.Do(req)
-// 	if err != nil {
-// 		log.Println("err occrured during get response from logon server", err)
-// 	}
-// 	authcode := new(ResponseAuth)
-// 	json.NewDecoder(res.Body).Decode(&authcode)
-// 	if authcode.State != EncState {
-// 		return "0"
-// 	}
-
-// 	return authcode.Code
-// }
-
-func OauthCallback() {
-	//need to wait for the response from resource server
 	// and send it back to us the Auth code
+
 }
 
 // to Resource server
-func Tokenrequest() {
-	//토큰 받았으면 받은토큰으로
+func Tokenrequest(code string, state string) *url.Values {
 
-	//request to get an Access Token for client with Auth code that provided by Resource server.
+	data := &url.Values{}
+	data.Set("client_id", "FfJDLNxLwC5I_H3NV7z6")
+	data.Set("client_secret", "FJzqN73rzl")
+	data.Set("grant_type", "authorization_code")
+	data.Set("code", code)
+	data.Set("state", state)
+
+	return data
 
 }
 
 func OauthTokenValidation() {
-	//Validate Token during the logon state persist.
+
 }

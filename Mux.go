@@ -47,7 +47,7 @@ func NewHandlers() *http.ServeMux {
 
 	//Oauth
 	mux.HandleFunc("/oauthsignin", OauthSignin)
-
+	mux.HandleFunc("/navercallback", OauthCallback)
 	//Static Fileserver - Css / JS push
 	mux.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
 		http.Redirect(w, r, "/index", http.StatusMovedPermanently)
