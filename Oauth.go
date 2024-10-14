@@ -164,6 +164,7 @@ func OauthCallback(w http.ResponseWriter, r *http.Request) {
 
 	responedtoken := new(ResponseReqToken)
 	json.NewDecoder(res.Body).Decode(responedtoken)
+	fmt.Println(responedtoken)
 	fmt.Println(responedtoken.Access_token, "해당 시간뒤에 만료 됨 : ", responedtoken.Expires_in)
 
 	// and send it back to us the Auth code
