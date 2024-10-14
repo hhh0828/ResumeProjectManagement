@@ -5,6 +5,7 @@ import (
 	"encoding/json"
 	_ "encoding/json"
 	"fmt"
+	"io"
 	"log"
 	"math/rand"
 	"net/http"
@@ -167,6 +168,16 @@ func OauthCallback(w http.ResponseWriter, r *http.Request) {
 	fmt.Println(responedtoken)
 	fmt.Println(responedtoken.Access_token, "해당 시간뒤에 만료 됨 : ", responedtoken.Expires_in)
 
+	getreq, _ := http.NewRequest("GET", "https://openapi.naver.com/v1/nid/me", nil)
+
+	getreq.Header.Set("Authorization", " Bearer "+responedtoken.Access_token)
+
+	response, _ := http.DefaultClient.Do(getreq)
+
+	value, _ := io.ReadAll(response.Body)
+	defer response.Body.Close()
+
+	fmt.Println(string(value))
 	// and send it back to us the Auth code
 
 }
