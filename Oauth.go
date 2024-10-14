@@ -161,7 +161,7 @@ func OauthCallback(w http.ResponseWriter, r *http.Request) {
 	res, _ := http.DefaultClient.Do(req)
 	responedtoken := &ResponseReqToken{}
 	json.NewDecoder(res.Body).Decode(responedtoken)
-
+	fmt.Println(responedtoken.Access_token)
 	// and send it back to us the Auth code
 
 }
