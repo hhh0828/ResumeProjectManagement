@@ -57,13 +57,19 @@
                                 
                             </div>
                             <!-- Submit Button-->
-                            <div class="d-grid mt-4-5"><button class="btn btn-success" id="signinrequest" type="button">Sign in</button></div>
+                            <div class="d-grid mt-4-5"><button class="btn btn-info" id="signinrequest" type="button">Sign in</button></div>
+                            
+                            <div class="d-grid mt-4-5"><button class="btn btn-success" id="naversignin" type="button">Naver 로그인</button></div>
+                            <div class="d-grid mt-2"><button class="btn btn-warning" id="kakaosignin" type="button">Kakao 로그인</button></div>
+
                         </form>
+                        
                     </div>
                 </div>
 
             </div>
         </div> 
+        
     </section> 
 
     <script>
@@ -101,6 +107,11 @@ fetch('/requestlogin', { // 여기에 실제 서버 URL 입력
     // 오류 시 처리 로직 추가
 });
 
+        })
+
+        document.getElementById('naversignin').addEventListener('click', function(event) {
+            //check site token or site 
+            window.location.href = "/oauthsignin"; 
         })
 
     </script>

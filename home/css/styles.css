@@ -7742,6 +7742,10 @@ textarea.form-control-lg {
   margin-top: 1rem !important;
 }
 
+.mt-35 {
+  margin-top: 60px !important;
+}
+
 .mt-4 {
   margin-top: 1.5rem !important;
 }
@@ -7751,6 +7755,9 @@ textarea.form-control-lg {
 
 .mt-5 {
   margin-top: 3rem !important;
+}
+.mt-6 {
+  margin-top: 61px !important;
 }
 
 .mt-auto {

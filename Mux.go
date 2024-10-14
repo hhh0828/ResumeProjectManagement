@@ -44,6 +44,10 @@ func NewHandlers() *http.ServeMux {
 	mux.HandleFunc("/requestlogin", LoginRequest)
 	mux.HandleFunc("/joinus", JoinasMember)
 	mux.HandleFunc("/logout", Logout)
+
+	//Oauth
+	mux.HandleFunc("/oauthsignin", OauthSignin)
+
 	//Static Fileserver - Css / JS push
 	mux.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
 		http.Redirect(w, r, "/index", http.StatusMovedPermanently)
