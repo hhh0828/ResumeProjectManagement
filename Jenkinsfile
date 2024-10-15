@@ -20,7 +20,7 @@ pipeline {
             steps {
                 echo 'Build Docker image'
                 sh '''
-                ssh hyunho@211.221.147.21 "cd /ResumeProjectManagement && 
+                ssh -v hyunho@211.221.147.21 "cd /ResumeProjectManagement && 
                 git pull &&
                 docker build --pull --rm -f Dockerfile_FS -t hyunhohong/resume:testver . &&
                 docker push hyunhohong/resume:testver &&
