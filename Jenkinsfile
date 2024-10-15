@@ -17,30 +17,34 @@ pipeline {
             }
         }
         stage('Docker Build') {
-            steps sshagent(['34c716a6-aa67-4d0d-bfcf-75b86238421f']){
-                echo 'Build Docker image'
-                sh '''
-                ssh -v hyunho@211.221.147.21 "cd /ResumeProjectManagement && 
-                git pull &&
-                docker build --pull --rm -f Dockerfile_FS -t hyunhohong/resume:testver . &&
-                docker push hyunhohong/resume:testver &&
-                echo 'Docker image built and pushed successfully'"
-                '''
+            steps {
+                sshagent(['34c716a6-aa67-4d0d-bfcf-75b86238421f']){
+                    echo 'Build Docker image'
+                    sh '''
+                    ssh -v hyunho@211.221.147.21 "cd /ResumeProjectManagement && 
+                    git pull &&
+                    docker build --pull --rm -f Dockerfile_FS -t hyunhohong/resume:testver . &&
+                    docker push hyunhohong/resume:testver &&
+                    echo 'Docker image built and pushed successfully'"
+                    '''
+                }
             }
         }
+
         stage('Deploy') {
-            steps sshagent(['34c716a6-aa67-4d0d-bfcf-75b86238421f']) {
-                echo '*********start build***********'
-                echo '*********make ssh connection and set a path for jobs***********'
-                //docker stop resumeapi && docker rm resumeapi &&
-                sh '''
-                ssh hyunho@211.221.147.21 "docker pull hyunhohong/resume:testver &&
-                docker run -d -p 8771:8771 -v ./:/usr/src/app hyunhohong/resume:testver &&
-                echo 'Container started successfully'"
-                '''
+            steps { 
+                sshagent(['34c716a6-aa67-4d0d-bfcf-75b86238421f']) {
+                    echo '*********start build***********'
+                    echo '*********make ssh connection and set a path for jobs***********'
+                    //docker stop resumeapi && docker rm resumeapi &&
+                    sh '''
+                    ssh hyunho@211.221.147.21 "docker pull hyunhohong/resume:testver &&
+                    docker run -d -p 8771:8771 -v ./:/usr/src/app hyunhohong/resume:testver &&
+                    echo 'Container started successfully'"
+                    '''
+                }
             }
         }
-    }
 }
 
 /*
