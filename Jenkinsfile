@@ -42,10 +42,11 @@ pipeline {
                     //temporary 임시포트 대체, 이름랜덤.
                     //docker pull - image - from hub. 
                     sh '''
-                    ssh hyunho@211.221.147.21 "echo 'start deployment' &&
+                    ssh hyunho@211.221.147.21 "cd /ResumeProjectManagement &&
+                    echo 'start deployment' &&
                     docker stop resumeapi &&
                     docker rm resumeapi &&
-                    docker run -d -p 8700:8700 -v ./ResumeProjectManagement:/usr/src/app --name resumeapi hyunhohong/resume:latest &&
+                    docker run -d -p 8700:8700 -v ./:/usr/src/app --name resumeapi hyunhohong/resume:latest &&
                     echo 'Container started successfully' &&
                     docker logs resumeapi" 
                     '''
