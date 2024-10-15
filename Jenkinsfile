@@ -17,9 +17,6 @@ pipeline {
             }
         }
         stage('Docker Build') {
-            when {
-                branch 'main'  // main 브랜치에서만 빌드 실행
-            }
             steps {
                 sshagent(['34c716a6-aa67-4d0d-bfcf-75b86238421f']){
                     echo 'Build Docker image'
@@ -39,9 +36,6 @@ pipeline {
 
         stage('Deploy') {
             steps {
-                when {
-                branch 'main'  // main 브랜치에서만 빌드 실행
-            }
                 sshagent(['34c716a6-aa67-4d0d-bfcf-75b86238421f']) {
                     echo '*********start build***********'
                     echo '*********make ssh connection and set a path for jobs***********'
