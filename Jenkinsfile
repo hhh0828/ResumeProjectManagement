@@ -23,24 +23,31 @@ pipeline {
                     sh '''
                     ssh -v hyunho@211.221.147.21 "cd /ResumeProjectManagement && 
                     git pull &&
-                    docker build --pull --rm -f Dockerfile_FS -t hyunhohong/resume:testver . &&
-                    docker push hyunhohong/resume:testver &&
-                    echo 'Docker image built and pushed successfully'"
+                    docker build --pull --rm -f Dockerfile_FS -t hyunhohong/resume:latest . &&
+                    echo 'Docker image built successfully'"
                     '''
+                    //docker push hyunhohong/resume:testver &&
+                    //배포후 최근 5개이내 버전만 남기고 지우는 로직 추가 - capacity 자동 관리
                 }
             }
         }
+        // 서버 docker stop / rm  컨테이너 실행중지하는 코드 넣어주면 좋을듯.... 
+        // 나중에~~~ 쿠버네티스에 파드로 배포할때 도커허브로 푸쉬하고 가져오는, 새로써야할듯. 
 
         stage('Deploy') {
             steps { 
                 sshagent(['34c716a6-aa67-4d0d-bfcf-75b86238421f']) {
                     echo '*********start build***********'
                     echo '*********make ssh connection and set a path for jobs***********'
-                    //docker stop resumeapi && docker rm resumeapi &&
+                    //temporary 임시포트 대체, 이름랜덤.
+                    //docker pull - image - from hub. 
                     sh '''
-                    ssh hyunho@211.221.147.21 "docker pull hyunhohong/resume:testver &&
-                    docker run -d -p 8771:8771 -v ./:/usr/src/app hyunhohong/resume:testver &&
-                    echo 'Container started successfully'"
+                    ssh hyunho@211.221.147.21 "echo 'start deployment' &&
+                    docker stop resumeapi &&
+                    docker rm resumeapi &&
+                    docker run -d -p 8700:8700 -v ./ResumeProjectManagement:/usr/src/app --name resumeapi hyunhohong/resume:latest &&
+                    echo 'Container started successfully' &&
+                    docker logs resumeapi" 
                     '''
                 }
             }
