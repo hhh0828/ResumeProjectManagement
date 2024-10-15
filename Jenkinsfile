@@ -45,8 +45,8 @@ pipeline {
                 }
             }
         }
+    }
 }
-
 /*
 generate ssh key 
 ssh-keygen -t rsa -b 4096 -C "jenkins-server"
