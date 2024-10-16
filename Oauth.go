@@ -252,7 +252,7 @@ func CheckUser(oid string) bool {
 	db := ConnectDB()
 	model := new(User)
 	db.First(&model, "userid = ?", oid)
-	if model.Oid == oid {
+	if model.Userid == oid {
 		return true
 	} else {
 		return false
@@ -276,6 +276,7 @@ func (r *Responses) CreateUser() {
 	}
 	db := ConnectDB()
 	db.Create(&Ouser)
+	fmt.Println("new user added")
 }
 
 // to Resource server
