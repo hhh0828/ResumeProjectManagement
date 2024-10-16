@@ -18,9 +18,14 @@ import (
 type User struct {
 	gorm.Model
 	GivenPermission string `json:"gp"`
-	Userid          string `json:"id"`
+	Userid          string `json:"id"` //OID로 대체
 	Userpw          string `json:"pw"`
 	Useremail       string
+	Oauth           int    // //Naver =1 /Kakao =2 //
+	Oid             string // 필수
+	Mobile          string // 필수
+	Birthday        string
+	Name            string //UTF-16이면 좋을듯한데 ? 흠
 }
 type Message struct {
 	Status            uint16
@@ -90,6 +95,26 @@ func Logout(w http.ResponseWriter, r *http.Request) {
 	http.Redirect(w, r, "/index", http.StatusMovedPermanently)
 }
 
+type LoginInterface interface {
+	CreateUser()
+}
+
+func CreateUser(li LoginInterface) {
+	li.CreateUser()
+}
+
+// GO object to DB // New User from hyunhoworld.site joinus.
+func (user *User) CreateUser() {
+	//pw encryption
+
+	u := user.Encryption()
+	user.Oauth = 2 // default permission > Owner provided.
+	user.Userpw = hex.EncodeToString(u[:])
+	db := ConnectDB()
+	db.Create(&user)
+
+}
+
 func JoinasMember(w http.ResponseWriter, r *http.Request) {
 	//User 객체 포인터 생성
 	requesttobeuser := new(User)
@@ -99,11 +124,14 @@ func JoinasMember(w http.ResponseWriter, r *http.Request) {
 		log.Println("fail to decode the User join data", err)
 	}
 	//사용자 엔크립션 해시256
-	a := requesttobeuser.Encryption()
-	//패스워드 헥사로
-	requesttobeuser.Userpw = hex.EncodeToString(a[:])
-	db := ConnectDB()
-	db.Create(&requesttobeuser)
+	CreateUser(requesttobeuser)
+	// a := requesttobeuser.Encryption()
+	// //패스워드 헥사로
+	// requesttobeuser.Userpw = hex.EncodeToString(a[:])
+
+	// db := ConnectDB()
+	// db.Create(&requesttobeuser)
+
 	w.Header().Set("Content-Type", "application/json")
 	json.NewEncoder(w).Encode(&Message{Status: 200, MessagefromMaster: "the request has been sent to the server please try to login. if you have issue with the logon send us a feedback on the contact page"})
 }
