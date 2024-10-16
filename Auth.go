@@ -89,7 +89,7 @@ func CreateHmac(data string, secret string) string {
 }
 
 // 만료된 토큰 logged-out 을 받을 시 처리하는 에러 처리 문장 필요함ValidateToken
-func ValidateToken(receivedjwt string) bool {
+func ValidateToken(receivedjwt string) (bool, string) {
 	separatedjwt := strings.Split(receivedjwt, ".")
 
 	header := separatedjwt[0]
@@ -105,13 +105,13 @@ func ValidateToken(receivedjwt string) bool {
 	payloadbyte, _ := base64.RawURLEncoding.DecodeString(payload)
 	var payloadi JPayload
 	json.Unmarshal(payloadbyte, &payloadi)
-
+	permission := payloadi.LoggedinAs
 	if int64(payloadi.Exp.Unix()) > time.Now().Unix() && (receivedsignature == expectedsignature) {
 		fmt.Println("time ok", "expected token validated")
-		return true
+		return true, permission
 	} else {
 		fmt.Println("time over or dead token")
-		return false
+		return false, permission
 	}
 
 }
@@ -129,11 +129,14 @@ func Authmiddelware(next func(w http.ResponseWriter, r *http.Request)) handlerfu
 			log.Println(err, "error occurred while getting a cookie")
 			return
 		}
-		if ValidateToken(cookie.Value) {
-			fmt.Println("token has been validated")
+		//클레임에서 권한체크해야함.
+		ok, permission := ValidateToken(cookie.Value)
+		if ok && permission == "WebMaster" {
+			fmt.Println("token has been validated this user is Webmaster")
 			next(w, r)
 
 		} else {
+			fmt.Println("the user who has no permission or didn't sign in is trying to editing!")
 			w.WriteHeader(401)
 			//여기서 리다이렉트로 보내버려도됨.
 			return

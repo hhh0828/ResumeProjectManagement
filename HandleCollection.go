@@ -18,7 +18,8 @@ func IndexHandler(w http.ResponseWriter, r *http.Request) {
 
 	var data PageData
 	cookie, err := r.Cookie("token")
-	if err != nil || !ValidateToken(cookie.Value) {
+	ok, _ := ValidateToken(cookie.Value)
+	if err != nil || !ok {
 		fmt.Println("error while getting cookiee")
 		//cookie.Value = "error"
 		data = PageData{
@@ -26,7 +27,7 @@ func IndexHandler(w http.ResponseWriter, r *http.Request) {
 			Con:      "Login",
 		}
 	}
-	if err == nil && ValidateToken(cookie.Value) {
+	if err == nil && ok {
 		fmt.Println("login state still validated")
 		data = PageData{
 			IsLogged: "/logout",

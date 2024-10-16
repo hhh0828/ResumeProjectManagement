@@ -14,7 +14,7 @@ func TestMain(t *testing.T) {
 	}
 	payload := JPayload{
 		Userid:     "testname",
-		LoggedinAs: "webmaster",
+		LoggedinAs: "WebMaster",
 		Exp:        time.Now().Add(15 * time.Minute),
 		Sub:        "test",
 	}
