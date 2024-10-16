@@ -18,23 +18,33 @@ func IndexHandler(w http.ResponseWriter, r *http.Request) {
 
 	var data PageData
 	cookie, err := r.Cookie("token")
-	ok, _ := ValidateToken(cookie.Value)
-	if err != nil || !ok {
+	if cookie != nil {
+		ok, _ := ValidateToken(cookie.Value)
+
+		if err != nil || !ok {
+			fmt.Println("error while getting cookiee")
+			//cookie.Value = "error"
+			data = PageData{
+				IsLogged: "/loginpage",
+				Con:      "Login",
+			}
+		}
+		if err == nil && ok {
+			fmt.Println("login state still validated")
+			data = PageData{
+				IsLogged: "/logout",
+				Con:      "Logout",
+			}
+		}
+	} else {
 		fmt.Println("error while getting cookiee")
 		//cookie.Value = "error"
 		data = PageData{
 			IsLogged: "/loginpage",
 			Con:      "Login",
 		}
-	}
-	if err == nil && ok {
-		fmt.Println("login state still validated")
-		data = PageData{
-			IsLogged: "/logout",
-			Con:      "Logout",
-		}
-	}
 
+	}
 	t, err := template.ParseFiles("./home/index.html")
 	if err != nil {
 		http.Error(w, "Unable to load template", http.StatusInternalServerError)
