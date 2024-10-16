@@ -46,15 +46,16 @@ func (user *User) Encryption() [32]byte {
 	return encpw
 }
 
-func (user *User) ChecksinDB(encpwstr string) bool {
+func (user *User) ChecksinDB(encpwstr string) (bool, string) {
 	comparinguser := new(User)
 	db := ConnectDB()
 	db.First(&comparinguser, "userid = ?", user.Userid) // UserId로 찾기
 	fmt.Println(comparinguser, user, "여긴 user check sin 함수 내")
+	permission := comparinguser.GivenPermission
 	if comparinguser.Userpw == encpwstr {
-		return true
+		return true, permission
 	} else {
-		return false
+		return false, permission
 	}
 }
 func LoginRequest(w http.ResponseWriter, r *http.Request) {
@@ -68,10 +69,12 @@ func LoginRequest(w http.ResponseWriter, r *http.Request) {
 	loguser.Userpw = hex.EncodeToString(encpw[:])
 	//Matching user
 	fmt.Println(loguser, "여기는 Request")
-	if loguser.ChecksinDB(loguser.Userpw) {
+
+	ok, permission := loguser.ChecksinDB(loguser.Userpw)
+	if ok {
 		//쿠키 추가하여 던져주고 확인하는.
 		w.Header().Set("Content-Type", "application/json")
-		a := NewCookie(GenerateToken(Jheader{Alg: "HS256", Typ: "JWT"}, JPayload{Userid: loguser.Userid, LoggedinAs: loguser.GivenPermission, Exp: time.Now().Add(15 * time.Minute)}))
+		a := NewCookie(GenerateToken(Jheader{Alg: "HS256", Typ: "JWT"}, JPayload{Userid: loguser.Userid, LoggedinAs: permission, Exp: time.Now().Add(15 * time.Minute)}))
 		http.SetCookie(w, a)
 		response, err := json.Marshal(&Message{Status: 200, MessagefromMaster: loguser.GivenPermission})
 		if err != nil {
