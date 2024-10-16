@@ -107,8 +107,10 @@ func ValidateToken(receivedjwt string) (bool, string) {
 	var payloadi JPayload
 	json.Unmarshal(payloadbyte, &payloadi)
 	permission := payloadi.LoggedinAs
+	fmt.Println(payloadi.LoggedinAs, permission)
 	if int64(payloadi.Exp.Unix()) > time.Now().Unix() && (receivedsignature == expectedsignature) {
 		fmt.Println("time ok", "expected token validated")
+
 		return true, permission
 	} else {
 		fmt.Println("time over or dead token")
