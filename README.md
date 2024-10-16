@@ -68,7 +68,7 @@ test build successed.
 generate token for git access on github. and add credential with token to request src - completed
 
 
-To-Do
+Basic CI CD 
 
 Create Docker based CD.
 Create test code for all the components.
@@ -76,3 +76,13 @@ so that any change must not make any issue.
 
 1. build docker image on jenkins server. and push them on the docker hub.
 2. access to the server that will have new image, and create docker container with new image. 
+
+Pipeline created
+10월15일 Basic CI/CD completed.
+Test branch published - 
+only need push event for triggered according to a main merge action.
+Webhook trigger > Jenkins server > Check if Main branch has any changes, if yes do a test and deploy app on server with ssh agent.
+
+test code will be deployed on test branch in the future, and it will be merged on main.
+
+

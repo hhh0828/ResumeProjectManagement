@@ -3,7 +3,7 @@ package main
 import (
 	"encoding/base64"
 	"encoding/json"
-	_ "encoding/json"
+
 	"fmt"
 	"io"
 	"log"
@@ -160,6 +160,7 @@ type Responses struct {
 func OauthCallback(w http.ResponseWriter, r *http.Request) {
 	code := r.URL.Query().Get("code")
 	state := r.URL.Query().Get("state")
+	//크로스 공격 방지.
 	cookie, _ := r.Cookie("ostate")
 	if cookie.Value != state {
 		log.Println("invalid cookie")
@@ -170,7 +171,6 @@ func OauthCallback(w http.ResponseWriter, r *http.Request) {
 	//돌아온 콜백 요청이 괜찮으면, 그길로 aCCESS 토큰 요청
 	data := Tokenrequest(code, state)
 
-	fmt.Println(data, "만들어진 토큰요청용 urlvalue")
 	req, err := http.NewRequest("POST", "https://nid.naver.com/oauth2.0/token", strings.NewReader(data.Encode()))
 	if err != nil {
 		log.Println("the error occured with request", err)
@@ -197,12 +197,77 @@ func OauthCallback(w http.ResponseWriter, r *http.Request) {
 
 	fmt.Println(resp)
 	fmt.Println(resp.Data.Name)
+	//별도 회원가입 없이 가능하게.. 자동회원가입
+	//네이버 회원정보 토대로 DB에 기록한다.
+	//데이터 가공해서 만들기!
+	//DB 조회 하고 ID가 이미있으면
+	if !CheckUser(resp.Data.ID) {
+		CreateUser(resp)
+
+		uid := &User{}
+		db := ConnectDB()
+		db.First(uid, "userid = ?", resp.Data.ID)
+		cookie := NewCookie(NewToken(uid.Userid, uid.GivenPermission))
+		http.SetCookie(w, cookie)
+		http.Redirect(w, r, "/index", http.StatusPermanentRedirect)
+		return
+	} else {
+		// 사용자가 이미 DB에 있는 경우 index핸들러로가면, 알아서 사이트 토큰 체크함, 15분 지난경우 Oauth 받더라도 다시 로그인해야함.
+		http.Redirect(w, r, "/index", http.StatusMovedPermanently)
+	}
+
 	//로그인 기록 체크 해야함. AccessToken 체크해서 Cache되어있는 사용자인지 체크 한시간 지났는지 체크하는 로직 만들기- 준비물 MAP
 	//로그인 후, 데이터베이스에 사용자 고유 식별정보와 이름을 매칭하여 저장함. 없는 회원의 겨우 회원 가입 유도.
-	http.Redirect(w, r, "/index", http.StatusTemporaryRedirect)
+	//
 
 	// and send it back to us the Auth code
 	//test
+}
+
+// a := NewCookie(GenerateToken(Jheader{Alg: "HS256", Typ: "JWT"}, JPayload{Userid: loguser.Userid, LoggedinAs: loguser.GivenPermission, Exp: time.Now().Add(15 * time.Minute)}))
+func NewToken(userid, paycl2 string) string {
+	Jh := &Jheader{
+		Alg: "HS256",
+		Typ: "JWT",
+	}
+	Jp := &JPayload{
+		Userid:     userid,
+		LoggedinAs: paycl2,
+		Exp:        time.Now().Add(15 * time.Minute),
+	}
+	NewToken := GenerateToken(*Jh, *Jp)
+	return NewToken
+}
+
+// 고유 ID 받고 있는지 없는지 먼저 체크
+func CheckUser(oid string) bool {
+	db := ConnectDB()
+	model := new(User)
+	db.First(&model, "userid = ?", oid)
+	if model.Oid == oid {
+		return true
+	} else {
+		return false
+	}
+
+}
+
+// redirected from callback().
+func OauthLogin(w http.ResponseWriter, r *http.Request) {
+	//로그인 정보가 등록되면,
+}
+
+// Naver response CreateUser()
+func (r *Responses) CreateUser() {
+	Ouser := &User{
+		GivenPermission: "0",
+		Userid:          r.Data.ID,
+		Mobile:          r.Data.Mobile2,
+		Oauth:           1,
+		Name:            r.Data.Name,
+	}
+	db := ConnectDB()
+	db.Create(&Ouser)
 }
 
 // to Resource server
