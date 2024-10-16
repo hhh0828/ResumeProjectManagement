@@ -201,6 +201,7 @@ func OauthCallback(w http.ResponseWriter, r *http.Request) {
 	//네이버 회원정보 토대로 DB에 기록한다.
 	//데이터 가공해서 만들기!
 	//DB 조회 하고 ID가 이미있으면
+
 	if !CheckUser(resp.Data.ID) {
 		CreateUser(resp)
 
@@ -212,9 +213,14 @@ func OauthCallback(w http.ResponseWriter, r *http.Request) {
 		http.Redirect(w, r, "/index", http.StatusPermanentRedirect)
 		return
 	} else {
-		// 사용자가 이미 DB에 있는 경우 index핸들러로가면, 알아서 사이트 토큰 체크함, 15분 지난경우 Oauth 받더라도 다시 로그인해야함.
-		// 문제 ? = 내 서버에서 15분짜리 토큰 쿠키 받고 토큰이 유효하지않아 리다이렉트 되었지만 네이버에서 발급한 토큰은 유효한경우 네이버로 로그인은 되지만 내서버에서는
-
+		// 사용자가 이미 DB에 있는 경우 index핸들러로가면, 알아서 사이트 토큰 체크함, 60분 지난경우 Oauth 받더라도 다시 로그인해야함.
+		// 문제 ? = 내 서버에서 60분짜리 토큰 쿠키 받고 토큰이 유효하지않아 리다이렉트 되었지만 네이버에서 발급한 토큰은 유효한경우 네이버로 로그인은 되지만 내서버에서는
+		uid := &User{}
+		db := ConnectDB()
+		db.First(uid, "userid = ?", resp.Data.ID)
+		//해당 사용자의 permission을 확인하기위해 DB에 접속해야함.
+		cookie := NewCookie(NewToken(uid.Userid, uid.GivenPermission))
+		http.SetCookie(w, cookie)
 		http.Redirect(w, r, "/index", http.StatusMovedPermanently)
 	}
 
