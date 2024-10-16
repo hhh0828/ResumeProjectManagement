@@ -213,6 +213,8 @@ func OauthCallback(w http.ResponseWriter, r *http.Request) {
 		return
 	} else {
 		// 사용자가 이미 DB에 있는 경우 index핸들러로가면, 알아서 사이트 토큰 체크함, 15분 지난경우 Oauth 받더라도 다시 로그인해야함.
+		// 문제 ? = 내 서버에서 15분짜리 토큰 쿠키 받고 토큰이 유효하지않아 리다이렉트 되었지만 네이버에서 발급한 토큰은 유효한경우 네이버로 로그인은 되지만 내서버에서는
+
 		http.Redirect(w, r, "/index", http.StatusMovedPermanently)
 	}
 
@@ -233,7 +235,7 @@ func NewToken(userid, paycl2 string) string {
 	Jp := &JPayload{
 		Userid:     userid,
 		LoggedinAs: paycl2,
-		Exp:        time.Now().Add(15 * time.Minute),
+		Exp:        time.Now().Add(60 * time.Minute),
 	}
 	NewToken := GenerateToken(*Jh, *Jp)
 	return NewToken
