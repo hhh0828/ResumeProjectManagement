@@ -132,7 +132,8 @@ func Authmiddelware(next func(w http.ResponseWriter, r *http.Request)) handlerfu
 		}
 		//클레임에서 권한체크해야함.
 		ok, permission := ValidateToken(cookie.Value)
-		if ok && permission == "WebMaster" {
+		fmt.Println(permission)
+		if ok && (permission == "WebMaster") {
 			fmt.Println("token has been validated this user is Webmaster", permission)
 			next(w, r)
 
