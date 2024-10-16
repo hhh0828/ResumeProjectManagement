@@ -105,9 +105,11 @@ func ValidateToken(receivedjwt string) (bool, string) {
 	//check exp time
 	payloadbyte, _ := base64.RawURLEncoding.DecodeString(payload)
 	var payloadi JPayload
+	//i may need to change the type of payloadi to a pointer , iguess....... need to check
 	json.Unmarshal(payloadbyte, &payloadi)
+	fmt.Println(payloadi)
 	permission := payloadi.LoggedinAs
-	fmt.Println(payloadi.LoggedinAs, permission)
+	//fmt.Println(payloadi.LoggedinAs, permission)
 	if int64(payloadi.Exp.Unix()) > time.Now().Unix() && (receivedsignature == expectedsignature) {
 		fmt.Println("time ok", "expected token validated")
 
