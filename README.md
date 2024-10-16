@@ -85,4 +85,30 @@ Webhook trigger > Jenkins server > Check if Main branch has any changes, if yes 
 
 test code will be deployed on test branch in the future, and it will be merged on main.
 
+10월16일
+Oauth system migration with main log in system.
+-register the member profile using user access token // db set-
+-issue a jwt to a new logged user with Naver account.
+-add a feature that validate jwt payload claim -
+    permission info- Webmaster only can access edit page.
+    modify some code
+        -validation part
+        func ValidateToken(receivedjwt string) bool >>>>>> func ValidateToken(receivedjwt string) (bool, string)
+        
+        -oauth signed up user check part
+        if Checkuser() bool else 
 
+        -below func added
+        Checkuser()
+        Createuser()
+
+        -interface added just in case adding a new login system like Oauth Kakaotalk, etc. 
+        LoginInterface
+
+-fix some bugs
+    validation codes were not wokring properly
+    comparing oid with userid -> fixed
+        Oauth.go >>
+        if model.oid == oid  >>>>>>> if model.Userid == oid
+
+Get some capacity of a Node which has docker CRI, Removed some images.
