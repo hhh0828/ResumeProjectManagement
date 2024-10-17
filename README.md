@@ -112,3 +112,5 @@ Oauth system migration with main log in system.
         if model.oid == oid  >>>>>>> if model.Userid == oid
 
 Get some capacity of a Node which has docker CRI, Removed some images.
+
+![diagram for communicates](image.png)
