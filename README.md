@@ -114,3 +114,22 @@ Oauth system migration with main log in system.
 Get some capacity of a Node which has docker CRI, Removed some images.
 
 ![diagram for communicates](image.png)
+
+
+
+
+The secure connection over TLS has been established between NginX(AWS) Client <> Local server that Container runtime interface running.
+
+Openssl Cert.pem / key.pem generated with RSA alg .. Generate Key pair for Localserver.
+Move Cert.pem/key pem on each proper path.
+Install 2nd Nginx on Local Server. update the paths for the reference of Cert. update proxy pass (--->docker port) and forward IPaddress header set.
+
+Firewall setup on local network. 443 to > 
+
+Setup route proxy pass to 2nd Nginx Server with HTTPS on 1st NginX (AWS)
+Copy the cert.pem on localserver to ca-certifcate path on NginX(AWS) and name it to cert.crt
+Update-ca-certifcates on Nginx(AWS) server.
+Restart both Nginx
+
+check curl -v https://ip.
+
