@@ -1,10 +1,16 @@
 package main
 
-import "net/http"
+import (
+	"net/http"
+
+	"github.com/prometheus/client_golang/prometheus"
+	"github.com/prometheus/client_golang/prometheus/collectors"
+)
 
 func main() {
 	//go routines and server is alivinig in hereee!!
 	//AdjustingScale("./home/assets/resumemanagement.png", 300, 300)
+	prometheus.MustRegister(collectors.NewGoCollector())
 	http.ListenAndServe("0.0.0.0:8700", NewHandlers())
 
 }
