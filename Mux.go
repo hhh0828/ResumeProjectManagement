@@ -3,6 +3,8 @@ package main
 import (
 	"fmt"
 	"net/http"
+
+	"github.com/prometheus/client_golang/prometheus/promhttp"
 )
 
 func NewHandlers() *http.ServeMux {
@@ -56,7 +58,7 @@ func NewHandlers() *http.ServeMux {
 	staticFileServer := http.FileServer(http.Dir("./home"))
 	mux.Handle("/home/", http.StripPrefix("/home/", staticFileServer))
 	// 뒤에 인덱스페이지 요청으로 가게끔 해야함... 첫페이지가 인덱스임.
-
+	http.Handle("/metrics", promhttp.Handler())
 	fmt.Println("handlerset")
 
 	return mux
