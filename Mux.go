@@ -44,8 +44,6 @@ func NewHandlers() *http.ServeMux {
 	mux.HandleFunc("/requestlogin", LoginRequest)
 	mux.HandleFunc("/joinus", JoinasMember)
 	mux.HandleFunc("/logout", Logout)
-	//prometheus
-	mux.HandleFunc("/metrics", Scrapping)
 
 	//Oauth
 	mux.HandleFunc("/oauthsignin", OauthSignin)

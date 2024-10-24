@@ -5,12 +5,17 @@ import (
 
 	"github.com/prometheus/client_golang/prometheus"
 	"github.com/prometheus/client_golang/prometheus/collectors"
+	"github.com/prometheus/client_golang/prometheus/promhttp"
 )
+
+var goCollector = collectors.NewGoCollector()
 
 func main() {
 	//go routines and server is alivinig in hereee!!
 	//AdjustingScale("./home/assets/resumemanagement.png", 300, 300)
-	prometheus.MustRegister(collectors.NewGoCollector())
+	prometheus.MustRegister(goCollector)
+	http.Handle("/metrics", promhttp.Handler())
+
 	http.ListenAndServe("0.0.0.0:8700", NewHandlers())
 
 }
