@@ -113,7 +113,7 @@ Oauth system migration with main log in system.
 
 Get some capacity of a Node which has docker CRI, Removed some images.
 
-![diagram for communicates](image.png)
+![components structure](image-1.png)
 
 
 
@@ -133,3 +133,6 @@ Restart both Nginx
 
 check curl -v https://ip.
 
+
+add prometheus / Grafana
+add node-exporter / Cadvisor

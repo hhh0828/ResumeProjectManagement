@@ -31,6 +31,7 @@ pipeline {
                 }
             }
         }
+        // docker rmi $(docker images -f "dangling=true" -q) - remove docker images that given tag removed.
         // 서버 docker stop / rm  컨테이너 실행중지하는 코드 넣어주면 좋을듯.... 
         // 나중에~~~ 쿠버네티스에 파드로 배포할때 도커허브로 푸쉬하고 가져오는, 새로써야할듯. 
 
