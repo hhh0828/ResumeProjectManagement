@@ -17,13 +17,13 @@ func TestMain(t *testing.T) {
 		LoggedinAs: "WebMaster",
 		Exp:        time.Now().Add(15 * time.Minute),
 		Sub:        "test",
-		SessionID:  "test",
+		SessionID:  "testt",
 	}
 
 	tk := GenerateToken(header, payload)
 	fmt.Println(tk)
 
-	ValidateToken(tk, "test")
+	ValidateToken(tk, "testt")
 }
 
 // std test run
