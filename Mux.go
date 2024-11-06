@@ -28,8 +28,8 @@ func NewHandlers() *http.ServeMux {
 	mux.HandleFunc("/returnresume", ReturnResume)
 	mux.HandleFunc("/updateresume", UpdateResume)
 	mux.HandleFunc("/returnskillang", Returnskillang)
-	mux.HandleFunc("/uploadresume", UploadResumeExp)
-	mux.HandleFunc("/editresume", EditResume)
+	mux.HandleFunc("/uploadresume", Authmiddelware(UploadResumeExp))
+	mux.HandleFunc("/editresume", Authmiddelware(EditResume))
 
 	//Feedback
 	mux.HandleFunc("/submit", SendingFeedback)
