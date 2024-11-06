@@ -136,3 +136,12 @@ check curl -v https://ip.
 
 add prometheus / Grafana
 add node-exporter / Cadvisor
+
+2024 - 11 - 06  Urgent patch has been deployed.
+1. remove blank ID in DB.
+2. apply midware pattern on all the code that edit, upload except project uploading
+3. add some more payload feild on JWT, collect user agent info and forwarded ipaddress. and match it when validate token.
+   this prevent user who access with copied cookie to a job that requires authorzing.
+4. update editing resume code.
+5. remove some docker image, save space!!
+
