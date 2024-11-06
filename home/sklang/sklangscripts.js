@@ -247,14 +247,14 @@ document.addEventListener("DOMContentLoaded", function () {
                 };
 
                 const periodFormatted = formatPeriod(periodStart, periodEnd);
-
+                const numericCardId = parseInt(cardId, 10);
                 fetch('/editresume', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
                     },
                     body: JSON.stringify({
-                        ID: cardId,
+                        ID: numericCardId,
                         period: periodFormatted,
                         role,
                         company,
