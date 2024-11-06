@@ -160,6 +160,7 @@ func EditResume(w http.ResponseWriter, r *http.Request) {
 		log.Println(err, "the error occured with decoding the data received from request")
 	}
 	expm := new(Experience)
+	fmt.Println(exp)
 	db.First(expm, exp.ID)
 
 	db.Model(expm).Updates(exp)
