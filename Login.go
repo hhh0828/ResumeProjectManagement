@@ -58,6 +58,7 @@ func (user *User) ChecksinDB(encpwstr string) (bool, string) {
 		return false, permission
 	}
 }
+
 func LoginRequest(w http.ResponseWriter, r *http.Request) {
 	//send user data from Client.
 	loguser := new(User)
@@ -74,7 +75,7 @@ func LoginRequest(w http.ResponseWriter, r *http.Request) {
 	if ok {
 		//쿠키 추가하여 던져주고 확인하는.
 		w.Header().Set("Content-Type", "application/json")
-		a := NewCookie(GenerateToken(Jheader{Alg: "HS256", Typ: "JWT"}, JPayload{Userid: loguser.Userid, LoggedinAs: permission, Exp: time.Now().Add(15 * time.Minute)}))
+		a := NewCookie(GenerateToken(Jheader{Alg: "HS256", Typ: "JWT"}, JPayload{Userid: loguser.Userid, LoggedinAs: permission, Exp: time.Now().Add(15 * time.Minute), SessionID: r.RemoteAddr + r.UserAgent()}))
 		http.SetCookie(w, a)
 		response, err := json.Marshal(&Message{Status: 200, MessagefromMaster: loguser.GivenPermission})
 		if err != nil {

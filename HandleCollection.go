@@ -19,7 +19,7 @@ func IndexHandler(w http.ResponseWriter, r *http.Request) {
 	var data PageData
 	cookie, err := r.Cookie("token")
 	if cookie != nil {
-		ok, _ := ValidateToken(cookie.Value)
+		ok, _ := ValidateToken(cookie.Value, r.UserAgent()+r.RemoteAddr)
 
 		if err != nil || !ok {
 			fmt.Println("error while getting cookiee")

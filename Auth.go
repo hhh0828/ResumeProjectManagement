@@ -22,6 +22,7 @@ type JPayload struct {
 	LoggedinAs string    `json:"LoggedinAs"`
 	Exp        time.Time `json:"exp"`
 	Sub        string    `json:"sub"`
+	SessionID  string    `json:"sessionid"` //Browser ID //IPaddress/version etc...
 }
 
 const Secretkey = "This is my Secret Key"
@@ -89,7 +90,7 @@ func CreateHmac(data string, secret string) string {
 }
 
 // 만료된 토큰 logged-out 을 받을 시 처리하는 에러 처리 문장 필요함ValidateToken
-func ValidateToken(receivedjwt string) (bool, string) {
+func ValidateToken(receivedjwt, userinfo string) (bool, string) {
 
 	separatedjwt := strings.Split(receivedjwt, ".")
 
@@ -109,6 +110,10 @@ func ValidateToken(receivedjwt string) (bool, string) {
 	json.Unmarshal(payloadbyte, &payloadi)
 	fmt.Println(payloadi)
 	permission := payloadi.LoggedinAs
+	if payloadi.SessionID != userinfo {
+		fmt.Println("not correct userinfo, someone is trying to copy the jwt on other browser")
+		return false, permission
+	}
 	//fmt.Println(payloadi.LoggedinAs, permission)
 	if int64(payloadi.Exp.Unix()) > time.Now().Unix() && (receivedsignature == expectedsignature) {
 		fmt.Println("time ok", "expected token validated")
@@ -134,8 +139,10 @@ func Authmiddelware(next func(w http.ResponseWriter, r *http.Request)) handlerfu
 			log.Println(err, "error occurred while getting a cookie")
 			return
 		}
+		userinfo := r.UserAgent() + r.RemoteAddr
+
 		//클레임에서 권한체크해야함.
-		ok, permission := ValidateToken(cookie.Value)
+		ok, permission := ValidateToken(cookie.Value, userinfo)
 		fmt.Println(permission)
 		if ok && (permission == "WebMaster") {
 			fmt.Println("token has been validated this user is Webmaster", permission)
