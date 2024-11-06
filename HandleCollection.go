@@ -18,8 +18,9 @@ func IndexHandler(w http.ResponseWriter, r *http.Request) {
 
 	var data PageData
 	cookie, err := r.Cookie("token")
+	userinfo := r.UserAgent() + r.Header.Get("X-Forwarded-For")
 	if cookie != nil {
-		ok, _ := ValidateToken(cookie.Value, r.UserAgent()+r.RemoteAddr)
+		ok, _ := ValidateToken(cookie.Value, userinfo)
 
 		if err != nil || !ok {
 			fmt.Println("error while getting cookiee")
