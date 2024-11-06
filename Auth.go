@@ -111,6 +111,8 @@ func ValidateToken(receivedjwt, userinfo string) (bool, string) {
 	fmt.Println(payloadi)
 	permission := payloadi.LoggedinAs
 	if payloadi.SessionID != userinfo {
+		fmt.Println(userinfo, "this is userinfo that one of parameter in this function")
+		fmt.Println(payloadi.SessionID, " this is SessionID that is created when user accessed to log")
 		fmt.Println("not correct userinfo, someone is trying to copy the jwt on other browser")
 		return false, permission
 	}
