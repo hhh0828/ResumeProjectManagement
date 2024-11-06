@@ -254,7 +254,7 @@ document.addEventListener("DOMContentLoaded", function () {
                         'Content-Type': 'application/json'
                     },
                     body: JSON.stringify({
-                        id: cardId,
+                        ID: cardId,
                         period: periodFormatted,
                         role,
                         company,
