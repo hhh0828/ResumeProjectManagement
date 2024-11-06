@@ -141,10 +141,14 @@ func Authmiddelware(next func(w http.ResponseWriter, r *http.Request)) handlerfu
 			log.Println(err, "error occurred while getting a cookie")
 			return
 		}
-		userinfo := r.UserAgent() + r.RemoteAddr
+		forwarded := r.Header.Get("X-Forwarded-For")
+		Userinfo := r.UserAgent()
+		if forwarded != "" {
+			Userinfo = r.UserAgent() + forwarded
+		}
 
 		//클레임에서 권한체크해야함.
-		ok, permission := ValidateToken(cookie.Value, userinfo)
+		ok, permission := ValidateToken(cookie.Value, Userinfo)
 		fmt.Println(permission)
 		if ok && (permission == "WebMaster") {
 			fmt.Println("token has been validated this user is Webmaster", permission)
