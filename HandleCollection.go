@@ -89,6 +89,7 @@ func PrintPDF(w http.ResponseWriter, r *http.Request) {
 	//PDF Creator API required
 }
 
+// will be deprecated soon
 func UpdateResume(w http.ResponseWriter, r *http.Request) {
 
 	var updatedresume Resume
@@ -153,15 +154,15 @@ func UploadResumeExp(w http.ResponseWriter, r *http.Request) {
 func EditResume(w http.ResponseWriter, r *http.Request) {
 	db := ConnectDB()
 
-	resumed := new(Resume)
-	err := json.NewDecoder(r.Body).Decode(resumed)
+	exp := new(Experience)
+	err := json.NewDecoder(r.Body).Decode(exp)
 	if err != nil {
 		log.Println(err, "the error occured with decoding the data received from request")
 	}
-	resume := new(Resume)
-	db.First(&resume, resumed.ID)
+	expm := new(Experience)
+	db.First(expm, exp.ID)
 
-	db.Model(&resume).Updates(resumed)
+	db.Model(expm).Updates(exp)
 	w.WriteHeader(http.StatusOK)
 	w.Write([]byte("Resume updated successfully"))
 }
