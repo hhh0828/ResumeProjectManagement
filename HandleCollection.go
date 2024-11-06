@@ -150,6 +150,22 @@ func UploadResumeExp(w http.ResponseWriter, r *http.Request) {
 
 }
 
+func EditResume(w http.ResponseWriter, r *http.Request) {
+	db := ConnectDB()
+
+	resumed := new(Resume)
+	err := json.NewDecoder(r.Body).Decode(resumed)
+	if err != nil {
+		log.Println(err, "the error occured with decoding the data received from request")
+	}
+	resume := new(Resume)
+	db.First(&resume, resumed.ID)
+
+	db.Model(&resume).Updates(resumed)
+	w.WriteHeader(http.StatusOK)
+	w.Write([]byte("Resume updated successfully"))
+}
+
 func ReturnResume(w http.ResponseWriter, r *http.Request) {
 	//DB conn required - Read, Create,  Update
 	//Object
