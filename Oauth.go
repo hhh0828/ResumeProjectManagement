@@ -208,7 +208,8 @@ func OauthCallback(w http.ResponseWriter, r *http.Request) {
 		uid := &User{}
 		db := ConnectDB()
 		db.First(uid, "userid = ?", resp.Data.ID)
-		cookie := NewCookie(NewToken(uid.Userid, uid.GivenPermission))
+		forwardedip := r.Header.Get("X-Forwarded-For")
+		cookie := NewCookie(NewToken(uid.Userid, uid.GivenPermission, r.UserAgent()+forwardedip))
 		http.SetCookie(w, cookie)
 		http.Redirect(w, r, "/index", http.StatusPermanentRedirect)
 		return
@@ -218,8 +219,9 @@ func OauthCallback(w http.ResponseWriter, r *http.Request) {
 		uid := &User{}
 		db := ConnectDB()
 		db.First(uid, "userid = ?", resp.Data.ID)
+		forwardedip := r.Header.Get("X-Forwarded-For")
 		//해당 사용자의 permission을 확인하기위해 DB에 접속해야함.
-		cookie := NewCookie(NewToken(uid.Userid, uid.GivenPermission))
+		cookie := NewCookie(NewToken(uid.Userid, uid.GivenPermission, r.UserAgent()+forwardedip))
 		http.SetCookie(w, cookie)
 		http.Redirect(w, r, "/index", http.StatusMovedPermanently)
 	}
@@ -233,7 +235,7 @@ func OauthCallback(w http.ResponseWriter, r *http.Request) {
 }
 
 // a := NewCookie(GenerateToken(Jheader{Alg: "HS256", Typ: "JWT"}, JPayload{Userid: loguser.Userid, LoggedinAs: loguser.GivenPermission, Exp: time.Now().Add(15 * time.Minute)}))
-func NewToken(userid, paycl2 string) string {
+func NewToken(userid, paycl2, payclsession string) string {
 	Jh := &Jheader{
 		Alg: "HS256",
 		Typ: "JWT",
@@ -242,6 +244,7 @@ func NewToken(userid, paycl2 string) string {
 		Userid:     userid,
 		LoggedinAs: paycl2,
 		Exp:        time.Now().Add(60 * time.Minute),
+		SessionID:  payclsession,
 	}
 	NewToken := GenerateToken(*Jh, *Jp)
 	return NewToken
