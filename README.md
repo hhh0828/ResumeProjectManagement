@@ -113,7 +113,7 @@ Oauth system migration with main log in system.
 
 Get some capacity of a Node which has docker CRI, Removed some images.
 
-![components structure](image-1.png)
+![diagram](image-2.png)
 
 
 
@@ -144,4 +144,7 @@ add node-exporter / Cadvisor
    this prevent user who access with copied cookie to a job that requires authorzing.
 4. update editing resume code.
 5. remove some docker image, save space!!
+
+proxy - WAF added - not configured yet - [2024-11-28]
+plan, implement some feature to prevent XSS attacks, SQL injection, Etc.
 

@@ -71,6 +71,7 @@ type Project struct {
 	LongDesc  string `json:"longdesc"`
 	ImgUrl    string `json:"imgurl"`
 	DetailUrl string `json:"detailurl"`
+	//AccessCount string `json:"count"`
 }
 
 func (p *Project) Upload() {
